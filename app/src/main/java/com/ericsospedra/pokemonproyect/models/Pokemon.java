@@ -4,27 +4,29 @@ public class Pokemon {
     private int id;
     private String name;
     private String type;
+    private int level;
     private int hp;
     private int attack;
     private int defence;
     private int speed;
-    private Prev prev;
-    private Next next;
-    private String gender;
     private String hiresURL;
 
-    public Pokemon(int id, String name, String type, int hp, int attack, int defence, int speed, Prev prev, Next next, String gender, String hiresURL) {
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String hiresURL) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.level = level;
         this.hp = hp;
         this.attack = attack;
         this.defence = defence;
         this.speed = speed;
-        this.prev = prev;
-        this.next = next;
-        this.gender = gender;
-        this.hiresURL = hiresURL;
+        this.hiresURL = convertirHiresUrl(hiresURL);
+    }
+
+    private String convertirHiresUrl(String s) {
+        String[] temporaly = s.split("/");
+        String imageWithExtension = temporaly[temporaly.length-1];
+        return imageWithExtension.split("\\.")[0];
     }
 
     public int getId() {
@@ -37,6 +39,10 @@ public class Pokemon {
 
     public String getType() {
         return type;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public int getHp() {
@@ -54,18 +60,6 @@ public class Pokemon {
     public int getSpeed() {
         return speed;
     }
-
-    public Prev getPrev() {
-        return prev;
-    }
-
-    public Next getNext() {
-        return next;
-    }
-
-    public String getGender() {
-        return gender;
-    }
     public String getHiresURL() {
         return hiresURL;
     }
@@ -79,9 +73,6 @@ public class Pokemon {
                 ", hp=" + hp +
                 ", attack=" + attack +
                 ", speed=" + speed +
-                ", prev=" + prev +
-                ", next=" + next +
-                ", gender='" + gender + '\'' +
                 ", hiresURL='" + hiresURL + '\'' +
                 '}';
     }

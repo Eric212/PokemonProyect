@@ -4977,7 +4977,7 @@
       "Poison"
     ],
     "base": {
-      "HP": 105,
+      "HP": 100,
       "Attack": 105,
       "Defense": 75,
       "Sp. Attack": 65,
@@ -6232,7 +6232,7 @@
       "Rock"
     ],
     "base": {
-      "HP": 105,
+      "HP": 100,
       "Attack": 130,
       "Defense": 120,
       "Sp. Attack": 45,
@@ -6294,7 +6294,7 @@
       "Normal"
     ],
     "base": {
-      "HP": 250,
+      "HP": 100,
       "Attack": 5,
       "Defense": 5,
       "Sp. Attack": 35,
@@ -6412,7 +6412,7 @@
       "Normal"
     ],
     "base": {
-      "HP": 105,
+      "HP": 100,
       "Attack": 95,
       "Defense": 80,
       "Sp. Attack": 40,
@@ -7299,7 +7299,7 @@
       "Ice"
     ],
     "base": {
-      "HP": 130,
+      "HP": 100,
       "Attack": 85,
       "Defense": 80,
       "Sp. Attack": 85,
@@ -7481,7 +7481,7 @@
       "Water"
     ],
     "base": {
-      "HP": 130,
+      "HP": 100,
       "Attack": 65,
       "Defense": 60,
       "Sp. Attack": 110,
@@ -8335,7 +8335,7 @@
       "Psychic"
     ],
     "base": {
-      "HP": 106,
+      "HP": 100,
       "Attack": 110,
       "Defense": 90,
       "Sp. Attack": 154,
