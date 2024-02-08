@@ -47,6 +47,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             super(itemView);
             ivPokemon = itemView.findViewById(R.id.ivPokemon);
             tvPokemon = itemView.findViewById(R.id.tvPokemon);
+            itemView.setOnClickListener(this);
         }
 
         public void onBindPokemon(Pokemon pokemon) {
@@ -58,7 +59,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
         @Override
         public void onClick(View v) {
-
+            listener.onClick(getAdapterPosition());
         }
     }
 }

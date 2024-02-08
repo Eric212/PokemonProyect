@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.ericsospedra.pokemonproyect.fragments.EntrenadorFragment;
+import com.ericsospedra.pokemonproyect.fragments.PokemonDetailFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonsFragment;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
@@ -24,15 +25,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PokemonsFragment.IOnAttach, IOnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PokemonsFragment.IOnAttach, IOnClickListener, PokemonDetailFragment.IOnAttach {
     private DrawerLayout drawer;
     private FragmentManager manager;
     private List<Pokemon> pokemons;
+    private Stack<Integer> id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        id = new Stack<>();
         cargarDatos();
         manager = getSupportFragmentManager();
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -120,6 +125,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(int position) {
+        id.push(position);
+        if(manager.findFragmentById(R.id.nav_fcvMain) instanceof PokemonsFragment){
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain,PokemonDetailFragment.class,null).commit();
+        }
+    }
 
+    @Override
+    public Pokemon getPokemon() {
+        return pokemons.get(id.pop());
     }
 }
