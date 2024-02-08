@@ -13,8 +13,14 @@
             android:icon="@drawable/entrenador"
             android:title="Entrenador" />
         <item
+            android:id="@+id/nav_combate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/combate"
+            android:title="Combates" />
+        <item
             android:id="@+id/nav_mercado"
-            android:icon="@drawable/pay"
+            android:icon="@drawable/mercado"
             android:title="Mercado" />
     </group>
 </menu>

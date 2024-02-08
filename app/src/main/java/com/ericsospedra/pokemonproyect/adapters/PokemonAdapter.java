@@ -52,8 +52,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
         public void onBindPokemon(Pokemon pokemon) {
             ivPokemon.setImageResource(itemView.getContext().getResources().getIdentifier("_"+pokemon.getHiresURL(),"drawable",itemView.getContext().getPackageName()));
-            ivPokemon.getLayoutParams().width = 430;
-            ivPokemon.getLayoutParams().height = 430;
+            ivPokemon.getLayoutParams().width = 300;
+            ivPokemon.getLayoutParams().height = 300;
             tvPokemon.setText(pokemon.getName());
         }
 

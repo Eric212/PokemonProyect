@@ -12,4 +12,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="pokemons">Pokemons</string>
     <string name="entrenador">Entrenador</string>
+    <string name="combates">Combates</string>
+    <string name="mercado">Mercado</string>
 </resources>

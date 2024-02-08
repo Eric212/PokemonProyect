@@ -5,7 +5,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+import com.ericsospedra.pokemonproyect.fragments.CombateFragment;
 import com.ericsospedra.pokemonproyect.fragments.EntrenadorFragment;
+import com.ericsospedra.pokemonproyect.fragments.MercadoFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonDetailFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonsFragment;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FragmentManager manager;
     private List<Pokemon> pokemons;
     private Stack<Integer> id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void cargarDatos() {
         PokemonParser parser = new PokemonParser(MainActivity.this);
-        if(parser.parser()){
+        if (parser.parser()) {
             pokemons = parser.getPokemons();
         }
     }
@@ -88,37 +91,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Fragment f;
         int id = item.getItemId();
+        FragmentManager manager = getSupportFragmentManager();
 
         if (id == R.id.nav_pokemons) {
-            f = new PokemonsFragment();
-            manager
-                    .beginTransaction().setReorderingAllowed(true)
-                    .addToBackStack(null)
-                    .replace(R.id.nav_fcvMain, f)
+            manager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fcvMain, new PokemonsFragment(), "pokemons_fragment")
+                    .addToBackStack("pokemons_fragment")
                     .commit();
             setTitle(R.string.pokemons);
         } else if (id == R.id.nav_entrenador) {
-            f = new EntrenadorFragment();
-            manager
-                    .beginTransaction().setReorderingAllowed(true)
-                    .addToBackStack(null)
-                    .replace(R.id.nav_fcvMain, f)
+            manager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fcvMain, new EntrenadorFragment(), "entrenador_fragment")
+                    .addToBackStack("entrenador_fragment")
                     .commit();
             setTitle(R.string.entrenador);
+        } else if (id == R.id.nav_combate) {
+            manager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fcvMain, new CombateFragment(), "combate_fragment")
+                    .addToBackStack("combate_fragment")
+                    .commit();
+            setTitle(R.string.combates);
+        } else if (id == R.id.nav_mercado) {
+            manager.beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.nav_fcvMain, new CombateFragment(), "combate_fragment")
+                    .addToBackStack("mercado_fragment")
+                    .commit();
         }
+
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+
     @Override
     public List<Pokemon> getPokemons() {
-        if(pokemons == null){
+        if (pokemons == null) {
             cargarDatos();
             return pokemons;
-        }else{
+        } else {
             return pokemons;
         }
     }
@@ -126,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onClick(int position) {
         id.push(position);
-        if(manager.findFragmentById(R.id.nav_fcvMain) instanceof PokemonsFragment){
-            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain,PokemonDetailFragment.class,null).commit();
+        if (manager.findFragmentById(R.id.nav_fcvMain) instanceof PokemonsFragment) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain, PokemonDetailFragment.class, null).commit();
         }
     }
 
@@ -135,4 +151,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Pokemon getPokemon() {
         return pokemons.get(id.pop());
     }
+
 }
