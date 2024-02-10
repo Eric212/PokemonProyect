@@ -1,17 +1,12 @@
-package com.ericsospedra.pokemonproyect.parsers;
+package com.ada.proyectofinal.Parser;
 
-import android.content.Context;
-import android.util.Log;
-
-
-import com.ericsospedra.pokemonproyect.R;
-import com.ericsospedra.pokemonproyect.models.Next;
-import com.ericsospedra.pokemonproyect.models.Pokemon;
-import com.ericsospedra.pokemonproyect.models.Prev;
-
+import com.ada.proyectofinal.entities.Pokemon;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,19 +14,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PokemonParser {
-    private final InputStream file;
+@Service
+public class Parser {
+    @Autowired
+    private ResourceLoader resourceLoader;
+    private InputStream file;
     private List<Pokemon> pokemons;
 
-    public PokemonParser(Context context) {
-        this.file = context.getResources().openRawResource(R.raw.pokedex);
+    public Parser() {
     }
 
-    public boolean parser() {
+    public boolean parse() {
+        try {
+            file = resourceLoader.getResource("classpath:pokedex.json").getInputStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         boolean parsed = false;
         String json = null;
-        int size = 0;
+        int size;
         pokemons = new ArrayList<>();
+
         try {
             size = file.available();
             byte[] buffer = new byte[size];
@@ -46,15 +49,16 @@ public class PokemonParser {
                 String name = nameObject.getString("english");
                 JSONArray typeArray = object.getJSONArray("type");
                 String type = typeArray.getString(0);
+                System.out.println(object.getInt("id"));
                 JSONObject baseObject = object.getJSONObject("base");
                 int hp = baseObject.getInt("HP");
                 int attack = baseObject.getInt("Attack");
                 int defense = baseObject.getInt("Defense");
                 int speed = baseObject.getInt("Speed");
-                JSONObject evolutionObject = object.getJSONObject("evolution");
                 String gender = object.getJSONObject("profile").getString("gender");
                 String hiresUrl = object.getJSONObject("image").getString("hires");
-                pokemons.add(new Pokemon(id,name,type,new Random().nextInt(4)+1,hp,attack,defense,speed,null,hiresUrl));
+                int level = new Random().nextInt(4)+1;
+                pokemons.add(new Pokemon(id,name,type,level,hp,attack,defense,speed,gender,level*1000f,hiresUrl,null,null,null));
                 parsed = true;
             }
         } catch (IOException | JSONException e) {
@@ -66,5 +70,4 @@ public class PokemonParser {
     public List<Pokemon> getPokemons() {
         return pokemons;
     }
-
 }

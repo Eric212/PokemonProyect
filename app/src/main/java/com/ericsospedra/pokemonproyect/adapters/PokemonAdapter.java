@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ericsospedra.pokemonproyect.R;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
         }
 
         public void onBindPokemon(Pokemon pokemon) {
-            ivPokemon.setImageResource(itemView.getContext().getResources().getIdentifier("_"+pokemon.getHiresURL(),"drawable",itemView.getContext().getPackageName()));
+            Picasso.get().load(pokemon.getHiresURL()).into(ivPokemon);
             ivPokemon.getLayoutParams().width = 300;
             ivPokemon.getLayoutParams().height = 300;
             tvPokemon.setText(pokemon.getName());

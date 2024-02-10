@@ -1,17 +1,28 @@
 package com.ericsospedra.pokemonproyect.models;
 
 public class Pokemon {
+
     private int id;
+
     private String name;
+
     private String type;
+
     private int level;
+
     private int hp;
+
     private int attack;
+
     private int defence;
+
     private int speed;
+
+    private String gender;
+
     private String hiresURL;
 
-    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String hiresURL) {
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, String hiresURL) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -20,13 +31,8 @@ public class Pokemon {
         this.attack = attack;
         this.defence = defence;
         this.speed = speed;
-        this.hiresURL = convertirHiresUrl(hiresURL);
-    }
-
-    private String convertirHiresUrl(String s) {
-        String[] temporaly = s.split("/");
-        String imageWithExtension = temporaly[temporaly.length-1];
-        return imageWithExtension.split("\\.")[0];
+        this.gender = gender;
+        this.hiresURL = hiresURL;
     }
 
     public int getId() {
@@ -60,20 +66,12 @@ public class Pokemon {
     public int getSpeed() {
         return speed;
     }
-    public String getHiresURL() {
-        return hiresURL;
+
+    public String getGender() {
+        return gender;
     }
 
-    @Override
-    public String toString() {
-        return "Pokemon{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", hp=" + hp +
-                ", attack=" + attack +
-                ", speed=" + speed +
-                ", hiresURL='" + hiresURL + '\'' +
-                '}';
+    public String getHiresURL() {
+        return hiresURL;
     }
 }
