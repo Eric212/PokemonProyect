@@ -24,9 +24,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PokemonsFragment extends Fragment {
-    public interface IOnAttach{
-        List<Pokemon> getPokemons();
-    }
     private IApiService api;
     private List<Pokemon> pokemons;
     private IOnClickListener listener;
@@ -59,8 +56,6 @@ public class PokemonsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        IOnAttach iOnAttach = (IOnAttach) context;
-        pokemons = iOnAttach.getPokemons();
         listener = (IOnClickListener) context;
     }
 }

@@ -1,13 +1,10 @@
 package com.ericsospedra.pokemonproyect.parsers;
 
 import android.content.Context;
-import android.util.Log;
 
 
 import com.ericsospedra.pokemonproyect.R;
-import com.ericsospedra.pokemonproyect.models.Next;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
-import com.ericsospedra.pokemonproyect.models.Prev;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +51,7 @@ public class PokemonParser {
                 JSONObject evolutionObject = object.getJSONObject("evolution");
                 String gender = object.getJSONObject("profile").getString("gender");
                 String hiresUrl = object.getJSONObject("image").getString("hires");
-                pokemons.add(new Pokemon(id,name,type,new Random().nextInt(4)+1,hp,attack,defense,speed,null,hiresUrl));
+                pokemons.add(new Pokemon(id,name,type,new Random().nextInt(4)+1,hp,attack,defense,speed,null,hiresUrl, 0, 0, 0));
                 parsed = true;
             }
         } catch (IOException | JSONException e) {

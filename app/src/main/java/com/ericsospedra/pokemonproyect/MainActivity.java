@@ -11,8 +11,12 @@ import com.ericsospedra.pokemonproyect.fragments.EntrenadorFragment;
 import com.ericsospedra.pokemonproyect.fragments.MercadoFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonDetailFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonsFragment;
+import com.ericsospedra.pokemonproyect.fragments.StartMenu;
+import com.ericsospedra.pokemonproyect.fragments.WelcomeFragment;
+import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
+import com.ericsospedra.pokemonproyect.models.RestClient;
 import com.ericsospedra.pokemonproyect.parsers.PokemonParser;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -31,10 +35,16 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PokemonsFragment.IOnAttach, IOnClickListener, PokemonDetailFragment.IOnAttach {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        IOnClickListener,
+        PokemonDetailFragment.IOnAttach {
+    public interface Token{
+        String getToken();
+    }
     private DrawerLayout drawer;
+    private IApiService api;
+    public static String token;
     private FragmentManager manager;
-    private List<Pokemon> pokemons;
     private Stack<Integer> id;
 
     @Override
@@ -42,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         id = new Stack<>();
-        cargarDatos();
+        api = RestClient.getInstance();
         manager = getSupportFragmentManager();
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -64,13 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void cargarDatos() {
-        PokemonParser parser = new PokemonParser(MainActivity.this);
-        if (parser.parser()) {
-            pokemons = parser.getPokemons();
-        }
     }
 
     @Override
@@ -130,28 +133,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-    @Override
-    public List<Pokemon> getPokemons() {
-        if (pokemons == null) {
-            cargarDatos();
-            return pokemons;
-        } else {
-            return pokemons;
-        }
-    }
-
     @Override
     public void onClick(int position) {
         id.push(position);
         if (manager.findFragmentById(R.id.nav_fcvMain) instanceof PokemonsFragment) {
             manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain, PokemonDetailFragment.class, null).commit();
+        }else if(manager.findFragmentById(R.id.nav_fcvMain) instanceof StartMenu){
+            StartMenu f = (StartMenu) manager.findFragmentById(R.id.nav_fcvMain);
+            token = f.getToken();
+            if(position == R.id.bLogIn){
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain, WelcomeFragment.class,null).commit();
+            }
         }
     }
 
     @Override
-    public Pokemon getPokemon() {
-        return pokemons.get(id.pop());
+    public int getPokemonId() {
+        return id.pop();
     }
-
 }
