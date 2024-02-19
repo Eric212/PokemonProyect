@@ -12,7 +12,9 @@ public class Entrenador {
 
     private String apellido;
 
-    private String Icono;
+    private boolean genero;
+
+    private String icono;
 
     private float dinero;
 
@@ -20,11 +22,22 @@ public class Entrenador {
 
     private List<Resultado> resultados = new ArrayList<>();
 
+    public Entrenador() {
+    }
+
+    public Entrenador(String nombre, String apellido, boolean genero, String icono, float dinero) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.genero = genero;
+        this.icono = icono;
+        this.dinero = dinero;
+    }
+
     public Entrenador(int id, String nombre, String apellido, String icono, float dinero, List<Pokemon> pokemons, List<Resultado> resultados) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
-        Icono = icono;
+        this.icono = icono;
         this.dinero = dinero;
         this.pokemons = pokemons;
         this.resultados = resultados;
@@ -43,7 +56,7 @@ public class Entrenador {
     }
 
     public String getIcono() {
-        return Icono;
+        return icono;
     }
 
     public float getDinero() {
@@ -58,13 +71,18 @@ public class Entrenador {
         return resultados;
     }
 
+    public boolean isGenero() {
+        return genero;
+    }
+
+
     @Override
     public String toString() {
         return "Entrenador{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", Icono='" + Icono + '\'' +
+                ", Icono='" + icono + '\'' +
                 ", dinero=" + dinero +
                 ", pokemons=" + pokemons +
                 ", resultados=" + resultados +

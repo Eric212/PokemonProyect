@@ -3,6 +3,7 @@ package com.ada.proyectofinal.services;
 import com.ada.proyectofinal.entities.Mercado;
 import com.ada.proyectofinal.entities.Pokemon;
 import com.ada.proyectofinal.repositories.RepositoryMercado;
+import com.ada.proyectofinal.repositories.RepositoryPokemon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public class ServicioMercado {
     @Autowired
     private RepositoryMercado repositoryMercado;
+    @Autowired
+    private RepositoryPokemon repositoryPokemon;
 
     public List<Mercado> findAll(){
         return repositoryMercado.findAll();
@@ -36,8 +39,8 @@ public class ServicioMercado {
         repositoryMercado.deleteAll();
     }
 
-    public void ListarPokemonsDelMercado(){
-        //
+    public List<Pokemon> ListarPokemonsDelMercado(){
+       return repositoryPokemon.mostrarPokemonsEnVenta();
     }
 
     public void guardarPokemonsEnMercado(List<Pokemon> pokemons) {
@@ -45,4 +48,5 @@ public class ServicioMercado {
             mercado.setPokemons(pokemons);
             save(mercado);
     }
+
 }

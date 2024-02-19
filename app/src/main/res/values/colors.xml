@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="pokemon_letters">#091AB5</color>
+    <color name="pokemon_background">#61000000</color>
+    <color name="pokemon_selected">#7461D8D4</color>
+    <color name="no_background">#00FFFFFF</color>
 </resources>

@@ -1,20 +1,11 @@
 package com.ada.proyectofinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "pokemon")
@@ -58,17 +49,18 @@ public class Pokemon {
     @Column
     private String hiresURL;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "entrenador_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonBackReference("entrenador-pokemons")
     private Entrenador entrenador;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mercado_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonBackReference("mercado-pokemons")
     private Mercado mercado;
 
-    @OneToOne(mappedBy = "pokemon", cascade = CascadeType.ALL)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "alineacion_id")
+    @JsonBackReference("alineacion-pokemons")
     private Alineacion alineacion;
 }

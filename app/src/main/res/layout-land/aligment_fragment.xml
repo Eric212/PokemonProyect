@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/alignment_background">
+
+    <include
+        android:id="@+id/iMenuAlignment"
+        layout="@layout/menu" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPokemonsAlignment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/pokemon_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iMenuAlignment" />
+
+    <ImageView
+        android:id="@+id/ivZona1Posicion1"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/iMenuAlignment"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona1Posicion2"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivZona1Posicion1"
+        app:layout_constraintTop_toBottomOf="@+id/iMenuAlignment"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona2Posicion1"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="46dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona1Posicion1"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona2Posicion2"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/ivZona2Posicion1"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona1Posicion1"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona2Posicion3"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivZona2Posicion2"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona1Posicion2"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona3Posicion1"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/rvPokemonsAlignment"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona2Posicion1"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona3Posicion2"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/ivZona3Posicion1"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona2Posicion1"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona3Posicion3"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/ivZona3Posicion2"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona2Posicion2"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona3Posicion4"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivZona3Posicion3"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona2Posicion3"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona4Posicion1"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="92dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona3Posicion2"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivZona4Posicion2"
+        android:layout_width="79dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivZona4Posicion1"
+        app:layout_constraintTop_toBottomOf="@+id/ivZona3Posicion3"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/background_pokemon" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona1Posicion1"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona1Posicion1"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona1Posicion1"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona1Posicion1"
+        app:layout_constraintTop_toTopOf="@+id/ivZona1Posicion1"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona1Posicion2"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona1Posicion2"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona1Posicion2"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona1Posicion2"
+        app:layout_constraintTop_toTopOf="@+id/ivZona1Posicion2"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona2Posicion1"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona2Posicion1"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona2Posicion1"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona2Posicion1"
+        app:layout_constraintTop_toTopOf="@+id/ivZona2Posicion1"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona2Posicion2"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona2Posicion2"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona2Posicion2"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona2Posicion2"
+        app:layout_constraintTop_toTopOf="@+id/ivZona2Posicion2"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona2Posicion3"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona2Posicion3"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona2Posicion3"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona2Posicion3"
+        app:layout_constraintTop_toTopOf="@+id/ivZona2Posicion3"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona3Posicion1"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona3Posicion1"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona3Posicion1"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/ivZona3Posicion1"
+        app:layout_constraintTop_toTopOf="@+id/ivZona3Posicion1"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona3Posicion2"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona3Posicion2"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona3Posicion2"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/ivZona3Posicion2"
+        app:layout_constraintTop_toTopOf="@+id/ivZona3Posicion2"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona3Posicion3"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona3Posicion3"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona3Posicion3"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/ivZona3Posicion3"
+        app:layout_constraintTop_toTopOf="@+id/ivZona3Posicion3"
+        app:layout_constraintVertical_bias="0.244" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona3Posicion4"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona3Posicion4"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona3Posicion4"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona3Posicion4"
+        app:layout_constraintTop_toTopOf="@+id/ivZona3Posicion4"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona4Posicion1"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona4Posicion1"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona4Posicion1"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona4Posicion1"
+        app:layout_constraintTop_toTopOf="@+id/ivZona4Posicion1"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+    <ImageView
+        android:id="@+id/ivPokemonZona4Posicion2"
+        android:layout_width="44dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivZona4Posicion2"
+        app:layout_constraintEnd_toEndOf="@+id/ivZona4Posicion2"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/ivZona4Posicion2"
+        app:layout_constraintTop_toTopOf="@+id/ivZona4Posicion2"
+        app:layout_constraintVertical_bias="0.24000001" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

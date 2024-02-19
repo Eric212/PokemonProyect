@@ -9,12 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.antlr.v4.runtime.misc.Array2DHashSet;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "entrenador")
@@ -33,17 +30,30 @@ public class Entrenador {
     @Column(length = 45, nullable = false)
     private String apellido;
 
+    @Column(nullable = false)
+    private boolean genero;
+
     @Column(length = 255)
     private String icono;
 
     @Column(nullable = false)
     private float dinero;
 
-    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToOne(mappedBy = "entrenador")
+    @JsonManagedReference("entrenador-combate")
+    private Combate  combate;
+
+    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
+    @JsonManagedReference("entrenador-pokemons")
     private List<Pokemon> pokemons = new ArrayList<>();
 
-    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
+       @JsonManagedReference("entrenador-resultados")
     private List<Resultado> resultados = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference("usuario-entrenador")
+    private Usuario usuario;
+
 }

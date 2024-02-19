@@ -6,7 +6,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
-    private static final String BASE_URL = "http://192.168.3.47:8080/";
+    private static String ip = "192.168.3.47";
+    private static String puerto = "8080";
     private static IApiService instance;
     private RestClient(){
 
@@ -14,11 +15,27 @@ public class RestClient {
     public synchronized static IApiService getInstance(){
         if(instance == null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl("http://"+ip+":"+puerto+"/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             instance = retrofit.create(IApiService.class);
         }
         return instance;
+    }
+
+    public static String getIp() {
+        return ip;
+    }
+
+    public static String getPuerto() {
+        return puerto;
+    }
+
+    public static void setIp(String ip) {
+        RestClient.ip = ip;
+    }
+
+    public static void setPuerto(String puerto) {
+        RestClient.puerto = puerto;
     }
 }

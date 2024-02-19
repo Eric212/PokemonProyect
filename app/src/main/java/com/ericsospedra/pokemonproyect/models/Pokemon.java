@@ -3,29 +3,23 @@ package com.ericsospedra.pokemonproyect.models;
 public class Pokemon {
 
     private int id;
-
     private String name;
-
     private String type;
-
     private int level;
-
     private int hp;
-
     private int attack;
-
     private int defence;
-
     private int speed;
-
     private String gender;
-
     private String hiresURL;
-    private int entrenador_id;
-    private int mercado_id;
-    private int alineacion_id;
+    private Entrenador entrenador;
+    private Mercado mercado;
+    private Alineacion alineacion;
 
-    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, String hiresURL, int entrenadorId, int mercadoId, int alineacionId) {
+    public Pokemon() {
+    }
+
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, String hiresURL, Entrenador entrenador, Mercado mercadoId, Alineacion alineacionId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -36,9 +30,61 @@ public class Pokemon {
         this.speed = speed;
         this.gender = gender;
         this.hiresURL = hiresURL;
-        entrenador_id = entrenadorId;
-        mercado_id = mercadoId;
-        alineacion_id = alineacionId;
+        this.entrenador = entrenador;
+        this.mercado = mercadoId;
+        this.alineacion = alineacionId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setHiresURL(String hiresURL) {
+        this.hiresURL = hiresURL;
+    }
+
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
+    }
+
+    public void setMercado_id(Mercado mercado) {
+        this.mercado = mercado;
+    }
+
+    public void setAlineacion(Alineacion alineacion_) {
+        this.alineacion = alineacion;
     }
 
     public int getId() {
@@ -81,15 +127,34 @@ public class Pokemon {
         return hiresURL;
     }
 
-    public int getEntrenador_id() {
-        return entrenador_id;
+    public Entrenador getEntrenador() {
+        return entrenador;
     }
 
-    public int getMercado_id() {
-        return mercado_id;
+    public Mercado getMercado_id() {
+        return mercado;
     }
 
-    public int getAlineacion_id() {
-        return alineacion_id;
+    public Alineacion getAlineacion() {
+        return alineacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defence=" + defence +
+                ", speed=" + speed +
+                ", gender='" + gender + '\'' +
+                ", hiresURL='" + hiresURL + '\'' +
+                ", entrenador_id=" + entrenador +
+                ", mercado_id=" + mercado +
+                ", alineacion_id=" + alineacion +
+                '}';
     }
 }

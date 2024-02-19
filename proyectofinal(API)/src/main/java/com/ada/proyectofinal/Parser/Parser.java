@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,13 +19,13 @@ import java.util.Random;
 public class Parser {
     @Autowired
     private ResourceLoader resourceLoader;
-    private InputStream file;
     private List<Pokemon> pokemons;
 
     public Parser() {
     }
-
+    //TODO:Balance level with stats
     public boolean parse() {
+        InputStream file;
         try {
             file = resourceLoader.getResource("classpath:pokedex.json").getInputStream();
         } catch (IOException e) {
@@ -40,7 +41,7 @@ public class Parser {
             byte[] buffer = new byte[size];
             file.read(buffer);
             file.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);

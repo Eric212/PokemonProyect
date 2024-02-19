@@ -1,11 +1,12 @@
 package com.ada.proyectofinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,13 +19,13 @@ public class Alineacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinColumn(name = "zona_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    private Zona zona;
+    @Column
+    private String zona;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pokemon_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    private Pokemon pokemon;
+    @OneToMany(mappedBy = "alineacion", cascade = CascadeType.ALL)
+    @JsonManagedReference("alineacion-pokemons")
+    private List<Pokemon> pokemons;
+
+
+
 }

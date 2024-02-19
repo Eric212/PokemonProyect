@@ -18,4 +18,13 @@ public interface RepositoryPokemon extends JpaRepository<Pokemon, Integer>{
 
     @Query(value = "SELECT * FROM pokemon WHERE entrenador_id IS NULL AND mercado_id IS NULL", nativeQuery = true)
     List<Pokemon> comprobarPokemonsSinEntrenadorNiMercado();
+
+    @Query(value = "SELECT * FROM pokemon WHERE entrenador_id is null", nativeQuery = true)
+    List<Pokemon> mostrarPokemonsEnVenta();
+
+    @Query(value = "SELECT * FROM pokemon WHERE alineacion_id IS NOT NULL AND entrenador_id = :id",nativeQuery = true)
+    List<Pokemon> getPokemonsAlineados(int id);
+
+    @Query(value = "SELECT * FROM pokemon WHERE alineacion_id IS NOT NULL",nativeQuery = true)
+    List<Pokemon> getAllPokemonsAlineados();
 }

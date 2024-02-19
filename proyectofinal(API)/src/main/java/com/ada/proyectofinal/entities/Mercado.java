@@ -1,9 +1,6 @@
 package com.ada.proyectofinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,7 +26,7 @@ public class Mercado {
     private String fecha;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonManagedReference("mercado-pokemons")
     private List<Pokemon> pokemons = new ArrayList<>();
 
 }

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/trainer_creator">
+
+    <ImageView
+        android:id="@+id/ivJugador"
+        android:layout_width="119dp"
+        android:layout_height="95dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar150" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.500684" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4939173" />
+
+    <EditText
+        android:id="@+id/etNombreJugador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#AE000000"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="text"
+        android:padding="2dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/pokemon_letters"
+        android:textColorHint="@color/pokemon_letters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivJugador" />
+
+    <EditText
+        android:id="@+id/etApellidoJugador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#D3000000"
+        android:ems="10"
+        android:hint="Apellido"
+        android:inputType="text"
+        android:padding="2dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/pokemon_letters"
+        android:textColorHint="@color/pokemon_letters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNombreJugador" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#CE000000"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="Genero"
+        android:textColor="@color/pokemon_letters"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etApellidoJugador" />
+
+    <RadioGroup
+        android:id="@+id/rgGenero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#AE000000"
+        android:padding="2.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+        <RadioButton
+            android:id="@+id/rbMasculino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AE000000"
+            android:text="Masculino"
+            android:textColor="@color/pokemon_letters" />
+
+        <RadioButton
+            android:id="@+id/rbFemenino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AE000000"
+            android:text="Femenino"
+            android:textColor="@color/pokemon_letters" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bCrearJugador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#4D6FFAFB"
+        android:text="Crear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgGenero"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

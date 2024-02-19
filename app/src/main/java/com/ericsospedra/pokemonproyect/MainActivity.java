@@ -1,47 +1,35 @@
 package com.ericsospedra.pokemonproyect;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
+import android.util.Log;
 
-import com.ericsospedra.pokemonproyect.fragments.CombateFragment;
-import com.ericsospedra.pokemonproyect.fragments.EntrenadorFragment;
-import com.ericsospedra.pokemonproyect.fragments.MercadoFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.ericsospedra.pokemonproyect.fragments.AlignmentFragment;
+import com.ericsospedra.pokemonproyect.fragments.BattleFragment;
+import com.ericsospedra.pokemonproyect.fragments.MarketFragment;
+import com.ericsospedra.pokemonproyect.fragments.PlayerCreatorFragment;
+import com.ericsospedra.pokemonproyect.fragments.PokedexFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokemonDetailFragment;
-import com.ericsospedra.pokemonproyect.fragments.PokemonsFragment;
 import com.ericsospedra.pokemonproyect.fragments.StartMenu;
+import com.ericsospedra.pokemonproyect.fragments.TrainerFragment;
 import com.ericsospedra.pokemonproyect.fragments.WelcomeFragment;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
-import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.ericsospedra.pokemonproyect.models.RestClient;
-import com.ericsospedra.pokemonproyect.parsers.PokemonParser;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import com.ericsospedra.pokemonproyect.models.Usuario;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends AppCompatActivity implements
         IOnClickListener,
         PokemonDetailFragment.IOnAttach {
-    public interface Token{
-        String getToken();
-    }
-    private DrawerLayout drawer;
+
     private IApiService api;
     public static String token;
     private FragmentManager manager;
@@ -50,105 +38,93 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         id = new Stack<>();
         api = RestClient.getInstance();
         manager = getSupportFragmentManager();
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    finish();
-                }
-            }
-        });
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.dPokemon);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        FragmentManager manager = getSupportFragmentManager();
-
-        if (id == R.id.nav_pokemons) {
-            manager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fcvMain, new PokemonsFragment(), "pokemons_fragment")
-                    .addToBackStack("pokemons_fragment")
-                    .commit();
-            setTitle(R.string.pokemons);
-        } else if (id == R.id.nav_entrenador) {
-            manager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fcvMain, new EntrenadorFragment(), "entrenador_fragment")
-                    .addToBackStack("entrenador_fragment")
-                    .commit();
-            setTitle(R.string.entrenador);
-        } else if (id == R.id.nav_combate) {
-            manager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fcvMain, new CombateFragment(), "combate_fragment")
-                    .addToBackStack("combate_fragment")
-                    .commit();
-            setTitle(R.string.combates);
-        } else if (id == R.id.nav_mercado) {
-            manager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.nav_fcvMain, new CombateFragment(), "combate_fragment")
-                    .addToBackStack("mercado_fragment")
-                    .commit();
-        }
-
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onClick(int position) {
-        id.push(position);
-        if (manager.findFragmentById(R.id.nav_fcvMain) instanceof PokemonsFragment) {
-            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain, PokemonDetailFragment.class, null).commit();
-        }else if(manager.findFragmentById(R.id.nav_fcvMain) instanceof StartMenu){
-            StartMenu f = (StartMenu) manager.findFragmentById(R.id.nav_fcvMain);
-            token = f.getToken();
-            if(position == R.id.bLogIn){
-                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.nav_fcvMain, WelcomeFragment.class,null).commit();
+        if (manager.findFragmentById(R.id.fcvMain) instanceof StartMenu) {
+            String username = getSharedPreferences("login", 0).getString("username", "");
+            token = getSharedPreferences("login", 0).getString("token", "");
+            api.entrenadorTieneUsuario(1).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()) {
+                            api.findUserByName(username).enqueue(new Callback<Usuario>() {
+                                @Override
+                                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                    if (response.isSuccessful()) {
+                                        token = response.body().getToken();
+                                        if (getSharedPreferences("login", 0).getString("token", "").equals(token)) {
+                                            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, WelcomeFragment.class, null).commit();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Usuario> call, Throwable t) {
+                                    Log.e(MainActivity.class.getSimpleName(), t.getMessage());
+                                }
+                            });
+                            Log.d("Info ", "Fallo la consulta api");
+                        } else {
+                            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, PlayerCreatorFragment.class, null).commit();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                }
+            });
+        } else if (manager.findFragmentById(R.id.fcvMain) instanceof PlayerCreatorFragment) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, WelcomeFragment.class, null).commit();
+        } else if (manager.findFragmentById(R.id.fcvMain) instanceof WelcomeFragment) {
+            logicaMenu(position);
+        } else if (manager.findFragmentById(R.id.fcvMain) instanceof PokedexFragment) {
+            if(!logicaMenu(position)) {
+                id.push(position);
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, PokemonDetailFragment.class, null).commit();
             }
+        } else if(manager.findFragmentById(R.id.fcvMain) instanceof TrainerFragment){
+            if(!logicaMenu(position)){
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, AlignmentFragment.class, null).commit();
+            }
+        }else if(manager.findFragmentById(R.id.fcvMain) instanceof AlignmentFragment){
+            logicaMenu(position);
+        }else if(manager.findFragmentById(R.id.fcvMain) instanceof PokemonDetailFragment) {
+            logicaMenu(position);
         }
     }
 
     @Override
     public int getPokemonId() {
         return id.pop();
+    }
+    public boolean logicaMenu(int position){
+        if (position == R.id.ivTrainer) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, TrainerFragment.class, null).commit();
+            return true;
+        } else if (position == R.id.ivHome) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, WelcomeFragment.class, null).commit();
+            return true;
+        } else if (position == R.id.ivPokedex) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, PokedexFragment.class, null).commit();
+            return true;
+        } else if (position == R.id.ivBattle) {
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, BattleFragment.class, null).commit();
+            return true;
+        } else if(position == R.id.ivMarket){
+            manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, MarketFragment.class, null).commit();
+            return true;
+        }else {
+            return false;
+        }
     }
 }

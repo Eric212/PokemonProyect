@@ -19,8 +19,9 @@ public class ServicioEntrenador {
     public Entrenador findById(int id){
         return repositoryEntrenador.findById(id);
     }
-    public void save(Entrenador entrenador){
+    public boolean save(Entrenador entrenador){
         repositoryEntrenador.save(entrenador);
+        return findById(entrenador.getId()) != null;
     }
     public void deleteById(int id){
         repositoryEntrenador.deleteById(id);
@@ -29,4 +30,15 @@ public class ServicioEntrenador {
         repositoryEntrenador.deleteAll();
     }
 
+    public Entrenador findByName(String name) {
+        return repositoryEntrenador.findByName(name);
+    }
+
+    public boolean findByUsuario(int id) {
+        return repositoryEntrenador.findByUsuario(id)!=null;
+    }
+
+    public Entrenador recuperarEntrenadorPorUsuario(int id) {
+        return repositoryEntrenador.recuperarEntrenadorPorUsuario(id);
+    }
 }

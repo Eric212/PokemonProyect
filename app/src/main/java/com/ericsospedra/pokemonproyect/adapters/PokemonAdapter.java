@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +19,7 @@ import java.util.List;
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
     private List<Pokemon> pokemons;
     private IOnClickListener listener;
+
     public PokemonAdapter(List<Pokemon> pokemons, IOnClickListener listener) {
         this.pokemons = pokemons;
         this.listener = listener;
@@ -27,12 +27,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
     @NonNull
     @Override
-    public PokemonAdapter.PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PokemonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemons,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PokemonAdapter.PokemonViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PokemonViewHolder holder, int position) {
         holder.onBindPokemon(pokemons.get(position));
     }
 
@@ -53,8 +53,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
 
         public void onBindPokemon(Pokemon pokemon) {
             Picasso.get().load(pokemon.getHiresURL()).into(ivPokemon);
-            ivPokemon.getLayoutParams().width = 300;
-            ivPokemon.getLayoutParams().height = 300;
             tvPokemon.setText(pokemon.getName());
         }
 

@@ -24,37 +24,30 @@ public class ControllerEntrenador {
     @Autowired
     private ServicioEntrenador servicioEntrenador;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional> getPerfil(@PathVariable int id) {
-        Optional<Entrenador> entrenador = Optional.ofNullable(servicioEntrenador.findById(id));
-        return new ResponseEntity<>(entrenador, HttpStatus.OK);
+    @GetMapping("/{name}")
+    public Entrenador getPerfil(@PathVariable String name) {
+        return servicioEntrenador.findByName(name);
     }
 
-    @GetMapping("/{id}/alineacion")
-    public ResponseEntity<List<Optional<Pokemon>>> getAlineacion(@PathVariable int id) {
-        Entrenador entrenador = servicioEntrenador.findById(id);
-        List<Pokemon> pokemons = entrenador.getPokemons();
-        List<Optional<Pokemon>> alineacion = new ArrayList<>();
-        for (Pokemon pokemon : pokemons) {
-            if (pokemon.getAlineacion() != null) {
-                Optional<Pokemon> oPokemon = Optional.of(pokemon);
-                alineacion.add(oPokemon);
-            }
-        }
-        return new ResponseEntity<>(alineacion, HttpStatus.OK);
+    @GetMapping("/usuario/{id}")
+    public Boolean usuarioTieneEntrenador(@PathVariable("id")int id){
+        return servicioEntrenador.findByUsuario(id);
+    }
+    @PostMapping("/add")
+    public Boolean addEntrenador(@RequestBody Entrenador entrenador){
+        return servicioEntrenador.save(entrenador);
     }
 
-    /*@GetMapping("/alinear")
-    public ResponseEntity<String> setAlineacion(@PathVariable int id,Model pokemonsAlineados) {
-        Entrenador entrenador = servicioEntrenador.findById(id);
-        List<Pokemon> pokemons = entrenador.getPokemons();
-        List<Optional<Pokemon>> alineacion = new ArrayList<>();
-        for (Pokemon pokemon : pokemons) {
-            if () {
-                Optional<Pokemon> oPokemon = Optional.of(pokemon);
-                alineacion.add(oPokemon);
-            }
+    @GetMapping("/find/{id}")
+    public Entrenador recuperarEntrenadorPorUsuario(@PathVariable("id") int id){
+        return servicioEntrenador.recuperarEntrenadorPorUsuario(id);
+    }
+
+    @PostMapping("/alinear")
+    public Boolean updateAlineacion(@RequestBody List<Pokemon> pokemons){
+        for(Pokemon pokemon : pokemons){
+            System.out.println(pokemon.toString());
         }
-        return new ResponseEntity<>("Alineado", HttpStatus.OK);
-    }*/
+        return  true;
+    }
 }

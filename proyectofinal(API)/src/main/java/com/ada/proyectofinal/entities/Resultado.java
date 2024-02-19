@@ -21,8 +21,8 @@ public class Resultado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "entrenador_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonBackReference("entrenador-resultados")
     private Entrenador entrenador;
 }
