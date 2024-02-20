@@ -11,6 +11,7 @@ public class Pokemon {
     private int defence;
     private int speed;
     private String gender;
+    private float valor;
     private String hiresURL;
     private Entrenador entrenador;
     private Mercado mercado;
@@ -19,7 +20,7 @@ public class Pokemon {
     public Pokemon() {
     }
 
-    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, String hiresURL, Entrenador entrenador, Mercado mercadoId, Alineacion alineacionId) {
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, Entrenador entrenador, Mercado mercado, Alineacion alineacion) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -29,10 +30,11 @@ public class Pokemon {
         this.defence = defence;
         this.speed = speed;
         this.gender = gender;
+        this.valor = valor;
         this.hiresURL = hiresURL;
         this.entrenador = entrenador;
-        this.mercado = mercadoId;
-        this.alineacion = alineacionId;
+        this.mercado = mercado;
+        this.alineacion = alineacion;
     }
 
     public void setId(int id) {
@@ -79,11 +81,15 @@ public class Pokemon {
         this.entrenador = entrenador;
     }
 
-    public void setMercado_id(Mercado mercado) {
+    public void setMercado(Mercado mercado) {
         this.mercado = mercado;
     }
 
-    public void setAlineacion(Alineacion alineacion_) {
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public void setAlineacion(Alineacion alineacion) {
         this.alineacion = alineacion;
     }
 
@@ -139,6 +145,14 @@ public class Pokemon {
         return alineacion;
     }
 
+    public Mercado getMercado() {
+        return mercado;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
     @Override
     public String toString() {
         return "Pokemon{" +
@@ -151,10 +165,12 @@ public class Pokemon {
                 ", defence=" + defence +
                 ", speed=" + speed +
                 ", gender='" + gender + '\'' +
+                ", valor=" + valor +
                 ", hiresURL='" + hiresURL + '\'' +
-                ", entrenador_id=" + entrenador +
-                ", mercado_id=" + mercado +
-                ", alineacion_id=" + alineacion +
+                ", entrenador=" + (entrenador != null ? entrenador.getId() : null) +
+                ", mercado=" + (mercado != null ? mercado.getId() : null) +
+                ", alineacion=" + (alineacion != null ? alineacion.getId() : null) +
                 '}';
     }
+
 }

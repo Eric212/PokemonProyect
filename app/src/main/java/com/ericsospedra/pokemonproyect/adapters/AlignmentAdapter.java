@@ -1,5 +1,6 @@
 package com.ericsospedra.pokemonproyect.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class AlignmentAdapter extends RecyclerView.Adapter<AlignmentAdapter.Poke
 
         @Override
         public void onClick(View v) {
+            Log.d("Adapter: ",pokemons.get(getAdapterPosition()).toString());
             listener.onClick(pokemons.get(getAdapterPosition()).getId());
         }
     }

@@ -153,8 +153,10 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
             @Override
             public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
                 if (response.isSuccessful()) {
+                    List<Pokemon> pokemons = response.body();
+                    Log.d("INFO ", pokemons.toString());
                     rvPokemonsAliniacion = view.findViewById(R.id.rvPokemonsAlignment);
-                    AlignmentAdapter adapter = new AlignmentAdapter(response.body(), listener);
+                    AlignmentAdapter adapter = new AlignmentAdapter(pokemons, listener);
                     rvPokemonsAliniacion.setAdapter(adapter);
                     rvPokemonsAliniacion.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                 }
@@ -205,9 +207,11 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
             }
         } else {
             if (!images.contains((ImageView) v)) {
-                ImageView imageSelected = (ImageView) v;
-                imageSelected.setBackgroundColor(getContext().getColor(R.color.pokemon_selected));
-                images.push((ImageView) v);
+                if(images.size()<1) {
+                    ImageView imageSelected = (ImageView) v;
+                    imageSelected.setBackgroundColor(getContext().getColor(R.color.pokemon_selected));
+                    images.push((ImageView) v);
+                }
             } else {
                 ImageView imageSelected = (ImageView) v;
                 imageSelected.setBackgroundColor(getContext().getColor(R.color.no_background));
@@ -252,7 +256,8 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
 
                                 @Override
                                 public void onFailure(Call<List<Alineacion>> call, Throwable t) {
-
+                                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.d("Error",t.getMessage());
                                 }
                             });
                         } else {
@@ -264,7 +269,7 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
 
                 @Override
                 public void onFailure(Call<Pokemon> call, Throwable t) {
-
+                    Log.d("Error",t.getMessage());
                 }
             });
         } else {
