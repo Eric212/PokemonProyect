@@ -17,6 +17,10 @@ public class Mercado {
         this.pokemons = pokemons;
     }
 
+    public Mercado(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

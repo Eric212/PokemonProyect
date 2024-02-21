@@ -1,11 +1,15 @@
 package com.ada.proyectofinal.entities;
 
+import com.ada.proyectofinal.dto.PokemonDTO;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "pokemon")

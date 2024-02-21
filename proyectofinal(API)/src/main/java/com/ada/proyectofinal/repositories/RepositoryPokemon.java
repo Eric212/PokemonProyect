@@ -10,6 +10,10 @@ import java.util.Set;
 
 @Repository
 public interface RepositoryPokemon extends JpaRepository<Pokemon, Integer>{
+
+    @Query(value = "SELECT * FROM pokemon WHERE id = :id",nativeQuery = true)
+    Pokemon findById(int id);
+
     @Query(value = "SELECT * FROM pokemon WHERE entrenador_id IS NULL Limit :limit", nativeQuery = true)
     List<Pokemon> recuperarPokemons(int limit);
 

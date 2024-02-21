@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
@@ -59,10 +60,10 @@ public class PokemonDetailFragment extends Fragment implements View.OnClickListe
         ivPokedex.setOnClickListener(this);
         ivBattle.setOnClickListener(this);
         ivMarket.setOnClickListener(this);
-        api.getPokemon(pokemonId).enqueue(new Callback<Pokemon>() {
+        api.getPokemon(pokemonId).enqueue(new Callback<PokemonDTO>() {
             @Override
-            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                Pokemon pokemon = response.body();
+            public void onResponse(Call<PokemonDTO> call, Response<PokemonDTO> response) {
+                PokemonDTO pokemon = response.body();
                 if(pokemon.getType().equalsIgnoreCase("grass")) {
                     view.setBackgroundResource(R.drawable.grass);
                 }else if(pokemon.getType().equalsIgnoreCase("fire")){
@@ -122,7 +123,7 @@ public class PokemonDetailFragment extends Fragment implements View.OnClickListe
             }
 
             @Override
-            public void onFailure(Call<Pokemon> call, Throwable t) {
+            public void onFailure(Call<PokemonDTO> call, Throwable t) {
 
             }
         });

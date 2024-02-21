@@ -1,5 +1,10 @@
 package com.ericsospedra.pokemonproyect.models;
 
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Pokemon {
 
     private int id;
@@ -13,14 +18,14 @@ public class Pokemon {
     private String gender;
     private float valor;
     private String hiresURL;
-    private int entrenador;
+    private Entrenador entrenador;
     private Mercado mercado;
     private Alineacion alineacion;
 
     public Pokemon() {
     }
 
-    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, int entrenador, Mercado mercado, Alineacion alineacion) {
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, Entrenador entrenador, Mercado mercado, Alineacion alineacion) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -77,7 +82,7 @@ public class Pokemon {
         this.hiresURL = hiresURL;
     }
 
-    public void setEntrenador(int entrenador) {
+    public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
     }
 
@@ -133,7 +138,7 @@ public class Pokemon {
         return hiresURL;
     }
 
-    public int getEntrenador() {
+    public Entrenador getEntrenador() {
         return entrenador;
     }
 

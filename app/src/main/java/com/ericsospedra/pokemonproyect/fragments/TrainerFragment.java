@@ -3,7 +3,6 @@ package com.ericsospedra.pokemonproyect.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,13 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
 import com.ericsospedra.pokemonproyect.adapters.TrainerPokemonAdapter;
+import com.ericsospedra.pokemonproyect.dto.EntrenadorDTO;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
+import com.ericsospedra.pokemonproyect.dto.UsuarioDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.interfaces.IOnLongClickListener;
-import com.ericsospedra.pokemonproyect.models.Entrenador;
-import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.ericsospedra.pokemonproyect.models.RestClient;
-import com.ericsospedra.pokemonproyect.models.Usuario;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -102,15 +101,14 @@ public class TrainerFragment extends Fragment implements IOnLongClickListener, V
         ivBattle.setOnClickListener(this);
         ivMarket.setOnClickListener(this);
         bCrearAlineacion.setOnClickListener(this);
-        api.findUserByName(preferences.getString("username", "")).enqueue(new Callback<Usuario>() {
+        api.findUserByName(preferences.getString("username", "")).enqueue(new Callback<UsuarioDTO>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+            public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
                 if (response.isSuccessful()) {
-                    Log.d("INFO ", response.body().toString());
-                    api.recuperarEntrenadorPorUsuario(response.body().getId()).enqueue(new Callback<Entrenador>() {
+                    api.recuperarEntrenadorPorUsuario(response.body().getId()).enqueue(new Callback<EntrenadorDTO>() {
                         @Override
-                        public void onResponse(Call<Entrenador> call, Response<Entrenador> response) {
-                            Entrenador entrenador = response.body();
+                        public void onResponse(Call<EntrenadorDTO> call, Response<EntrenadorDTO> response) {
+                            EntrenadorDTO entrenador = response.body();
                             ivEntrenador.setImageResource(getContext().getResources().getIdentifier(entrenador.getIcono(), "drawable", getContext().getPackageName()));
                             tvTrainerName = view.findViewById(R.id.tvTrainerName);
                             tvTrainerSurname = view.findViewById(R.id.tvTrainerSurname);
@@ -118,14 +116,14 @@ public class TrainerFragment extends Fragment implements IOnLongClickListener, V
                             rvPokemonEntrenador = view.findViewById(R.id.rvPokemonsEntrendor);
                             tvTrainerName.setText(entrenador.getNombre());
                             tvTrainerSurname.setText(entrenador.getApellido());
-                            tvDinero.setText(String.valueOf(new DecimalFormat(entrenador.getDinero() == 0 ? "#" : "#.##").format(entrenador.getDinero())));
+                            tvDinero.setText(new DecimalFormat(entrenador.getDinero() == 0 ? "#" : "#.##").format(entrenador.getDinero()));
                             TrainerPokemonAdapter adapter = new TrainerPokemonAdapter(entrenador.getPokemons(), onLongClickListener);
                             rvPokemonEntrenador.setAdapter(adapter);
                             rvPokemonEntrenador.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
                         }
 
                         @Override
-                        public void onFailure(Call<Entrenador> call, Throwable t) {
+                        public void onFailure(Call<EntrenadorDTO> call, Throwable t) {
 
                         }
                     });
@@ -133,7 +131,7 @@ public class TrainerFragment extends Fragment implements IOnLongClickListener, V
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+            public void onFailure(Call<UsuarioDTO> call, Throwable t) {
 
             }
         });
@@ -147,7 +145,7 @@ public class TrainerFragment extends Fragment implements IOnLongClickListener, V
     }
 
     @Override
-    public void onLongClick(Pokemon pokemon) {
+    public void onLongClick(PokemonDTO pokemon) {
         ivPokemon.setVisibility(View.VISIBLE);
         ivBackgroundDetail.setVisibility(View.VISIBLE);
         pbLife.setVisibility(View.VISIBLE);

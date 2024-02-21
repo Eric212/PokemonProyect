@@ -1,49 +1,63 @@
-package com.ericsospedra.pokemonproyect.models;
+package com.ada.proyectofinal.dto;
 
-public class Usuario {
+public class UsuarioDTO {
     private int id;
     private String username;
     private String password;
     private String token;
 
-    public Usuario() {
+    public UsuarioDTO() {
     }
 
-    public Usuario(String username, String password, String token) {
+    public UsuarioDTO(String username, String password, String token) {
         this.username = username;
         this.password = password;
         this.token = token;
     }
-    public Usuario(int id, String username, String password, String token) {
+
+    public UsuarioDTO(int id, String username, String password, String token) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.token = token;
     }
 
-    public Usuario(int id) {
-        this.id = id;
-    }
-
+    // Getters y setters
     public int getId() {
         return id;
     }
 
-    public String getToken() {
-        return token;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "UsuarioDTO{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

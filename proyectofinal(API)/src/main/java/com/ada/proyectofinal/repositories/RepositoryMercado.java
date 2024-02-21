@@ -10,4 +10,8 @@ import java.util.List;
 
 @Repository
 public interface RepositoryMercado extends JpaRepository<Mercado, Integer> {
+
+    @Query(value = "SELECT * FROM mercado WHERE id =:id",nativeQuery = true)
+    Mercado findById(int id);
+
 }

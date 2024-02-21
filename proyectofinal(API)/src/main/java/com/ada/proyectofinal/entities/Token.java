@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @Data
 public class Token {
     private String token;
-
 }

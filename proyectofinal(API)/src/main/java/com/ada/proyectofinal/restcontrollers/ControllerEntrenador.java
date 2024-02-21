@@ -1,9 +1,12 @@
 package com.ada.proyectofinal.restcontrollers;
 
 import ch.qos.logback.core.model.Model;
+import com.ada.proyectofinal.dto.EntrenadorDTO;
+import com.ada.proyectofinal.dto.PokemonDTO;
 import com.ada.proyectofinal.entities.Alineacion;
 import com.ada.proyectofinal.entities.Entrenador;
 import com.ada.proyectofinal.entities.Pokemon;
+import com.ada.proyectofinal.services.DTOConverterAndReverse;
 import com.ada.proyectofinal.services.ServicioEntrenador;
 import com.ada.proyectofinal.services.ServicioMercado;
 import com.ada.proyectofinal.services.ServicioPokemon;
@@ -24,9 +27,12 @@ public class ControllerEntrenador {
     @Autowired
     private ServicioEntrenador servicioEntrenador;
 
+    @Autowired
+    private DTOConverterAndReverse dtoConverterAndReverse;
+
     @GetMapping("/{name}")
-    public Entrenador getPerfil(@PathVariable String name) {
-        return servicioEntrenador.findByName(name);
+    public EntrenadorDTO getPerfil(@PathVariable String name) {
+        return dtoConverterAndReverse.fromEntrenador(servicioEntrenador.findByName(name));
     }
 
     @GetMapping("/usuario/{id}")
@@ -34,20 +40,12 @@ public class ControllerEntrenador {
         return servicioEntrenador.findByUsuario(id);
     }
     @PostMapping("/add")
-    public Boolean addEntrenador(@RequestBody Entrenador entrenador){
-        return servicioEntrenador.save(entrenador);
+    public Boolean addEntrenador(@RequestBody EntrenadorDTO entrenador){
+        return servicioEntrenador.save(dtoConverterAndReverse.fromEntrenadorDTO(entrenador));
     }
 
     @GetMapping("/find/{id}")
-    public Entrenador recuperarEntrenadorPorUsuario(@PathVariable("id") int id){
-        return servicioEntrenador.recuperarEntrenadorPorUsuario(id);
-    }
-
-    @PostMapping("/alinear")
-    public Boolean updateAlineacion(@RequestBody List<Pokemon> pokemons){
-        for(Pokemon pokemon : pokemons){
-            System.out.println(pokemon.toString());
-        }
-        return  true;
+    public EntrenadorDTO recuperarEntrenadorPorUsuario(@PathVariable("id") int id){
+        return dtoConverterAndReverse.fromEntrenador(servicioEntrenador.recuperarEntrenadorPorUsuario(id));
     }
 }

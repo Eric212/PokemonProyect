@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 
 import com.ericsospedra.pokemonproyect.LoginPreference;
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.TokenDTO;
+import com.ericsospedra.pokemonproyect.dto.UsuarioDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.RestClient;
@@ -47,7 +49,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
     private Button bSignIn;
     private ImageView ivPreference;
     private IApiService api;
-    private Token token;
+    private TokenDTO token;
     private CheckBox cbRemember;
     private Context context;
 
@@ -63,7 +65,8 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         if (preference != null) {
             etUsername.setText(preference.getString("username", ""));
             etPassword.setText(preference.getString("password", ""));
-            token = new Token(preference.getString("token", ""));
+            token = new TokenDTO();
+            token.setToken(preference.getString("token", ""));
             RestClient.setIp(preference.getString("ip", ""));
             RestClient.setPuerto(preference.getString("puerto", ""));
             cbRemember.setChecked(true);
@@ -84,7 +87,8 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         if (preference != null) {
             etUsername.setText(preference.getString("username", ""));
             etPassword.setText(preference.getString("password", ""));
-            token = new Token(preference.getString("token", ""));
+            token = new TokenDTO();
+            token.setToken(preference.getString("token", ""));
             RestClient.setIp(preference.getString("ip", ""));
             RestClient.setPuerto(preference.getString("puerto", ""));
             cbRemember.setChecked(true);
@@ -107,13 +111,14 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.bLogIn) {
             Usuario usuario = null;
             try {
-                usuario = new Usuario(etUsername.getText().toString(), HashGenerator.getSHAString(etPassword.getText().toString()), token.getToken());
+                usuario = new Usuario(etUsername.getText().toString(), HashGenerator.getSHAString(etPassword.getText().toString()), null);
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
-            api.checkLogin(usuario).enqueue(new Callback<Token>() {
+            UsuarioDTO usuarioDTO = UsuarioDTO.fromUsuario(usuario);
+            api.checkLogin(usuarioDTO).enqueue(new Callback<TokenDTO>() {
                 @Override
-                public void onResponse(Call<Token> call, Response<Token> response) {
+                public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
                     token = response.body();
                     if (!token.getToken().equals("")) {
                         tvAlert.setVisibility(View.GONE);
@@ -130,7 +135,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void onFailure(Call<Token> call, Throwable t) {
+                public void onFailure(Call<TokenDTO> call, Throwable t) {
                     Log.e(StartMenu.class.getSimpleName(), t.getMessage());
                 }
             });
@@ -141,9 +146,10 @@ public class StartMenu extends Fragment implements View.OnClickListener {
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
-            api.userAdd(usuario).enqueue(new Callback<Token>() {
+            UsuarioDTO usuarioDTO = UsuarioDTO.fromUsuario(usuario);
+            api.userAdd(usuarioDTO).enqueue(new Callback<TokenDTO>() {
                 @Override
-                public void onResponse(Call<Token> call, Response<Token> response) {
+                public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
                     token = response.body();
                     Log.d("Info ", token.getToken());
                     if (!token.getToken().equals("")) {
@@ -168,7 +174,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 }
 
                 @Override
-                public void onFailure(Call<Token> call, Throwable t) {
+                public void onFailure(Call<TokenDTO> call, Throwable t) {
                     Log.e(StartMenu.class.getSimpleName(), t.getMessage());
                 }
             });

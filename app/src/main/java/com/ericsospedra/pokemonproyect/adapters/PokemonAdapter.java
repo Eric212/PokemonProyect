@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.squareup.picasso.Picasso;
@@ -17,10 +18,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder> {
-    private List<Pokemon> pokemons;
+    private List<PokemonDTO> pokemons;
     private IOnClickListener listener;
 
-    public PokemonAdapter(List<Pokemon> pokemons, IOnClickListener listener) {
+    public PokemonAdapter(List<PokemonDTO> pokemons, IOnClickListener listener) {
         this.pokemons = pokemons;
         this.listener = listener;
     }
@@ -51,7 +52,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.PokemonV
             itemView.setOnClickListener(this);
         }
 
-        public void onBindPokemon(Pokemon pokemon) {
+        public void onBindPokemon(PokemonDTO pokemon) {
             Picasso.get().load(pokemon.getHiresURL()).into(ivPokemon);
             tvPokemon.setText(pokemon.getName());
         }

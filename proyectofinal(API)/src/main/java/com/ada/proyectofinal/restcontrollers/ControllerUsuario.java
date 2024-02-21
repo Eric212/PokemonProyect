@@ -1,7 +1,10 @@
 package com.ada.proyectofinal.restcontrollers;
 
+import com.ada.proyectofinal.dto.TokenDTO;
+import com.ada.proyectofinal.dto.UsuarioDTO;
 import com.ada.proyectofinal.entities.Token;
 import com.ada.proyectofinal.entities.Usuario;
+import com.ada.proyectofinal.services.DTOConverterAndReverse;
 import com.ada.proyectofinal.services.ServicioUsuario;
 import com.ada.proyectofinal.services.TokenGenerator;
 import com.ada.proyectofinal.utils.HashGenerator;
@@ -19,39 +22,42 @@ public class ControllerUsuario {
     @Autowired
     TokenGenerator tokenGenerator;
 
+    @Autowired
+    private DTOConverterAndReverse dtoConverterAndReverse;
+
     @PostMapping("/{id}")
-    public Usuario findUser(@PathVariable("id") int id) {
+    public UsuarioDTO findUser(@PathVariable("id") int id) {
         Usuario usuario = servicioUsuario.findById(id);
-        Usuario userForSend = new Usuario();
-        userForSend.setId(usuario.getId());
-        userForSend.setUsername(usuario.getUsername());
-        userForSend.setToken(usuario.getToken());
-        return userForSend;
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setUsername(usuario.getUsername());
+        usuarioDTO.setToken(usuario.getToken());
+        return usuarioDTO;
     }
 
     @PostMapping("/login")
-    public Token checkLogIn(@RequestBody Usuario usuario) {
+    public TokenDTO checkLogIn(@RequestBody Usuario usuario) {
         if (servicioUsuario.checkUser(usuario.getUsername(), usuario.getPassword()) != null) {
-            return new Token(servicioUsuario.checkUser(usuario.getUsername(), usuario.getPassword()));
+            return new TokenDTO(servicioUsuario.checkUser(usuario.getUsername(), usuario.getPassword()));
         } else {
-            return new Token("");
+            return new TokenDTO("");
         }
     }
 
     @PostMapping("/signin")
-    public Token addUser(@RequestBody Usuario usuario) {
+    public TokenDTO addUser(@RequestBody Usuario usuario) {
         if (servicioUsuario.findUserByName(usuario.getUsername()) == null) {
             usuario.setToken(TokenGenerator.generateToken(usuario.getUsername()));
             servicioUsuario.save(usuario);
-            return new Token(usuario.getToken());
+            return new TokenDTO(usuario.getToken());
         } else {
-            return new Token("");
+            return new TokenDTO("");
         }
     }
 
     @PostMapping("/buscarpornombre/{name}")
-    public Usuario findUserByName(@PathVariable("name") String name) {
-        return servicioUsuario.findUserByName(name);
+    public UsuarioDTO findUserByName(@PathVariable("name") String name) {
+        return dtoConverterAndReverse.fromUsuario(servicioUsuario.findUserByName(name));
     }
 
     @GetMapping("/buscarportoken/{token}")

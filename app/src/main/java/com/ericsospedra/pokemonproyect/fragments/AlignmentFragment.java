@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
 import com.ericsospedra.pokemonproyect.adapters.AlignmentAdapter;
+import com.ericsospedra.pokemonproyect.dto.AlineacionDTO;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Alineacion;
@@ -67,11 +69,11 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
     private List<ImageView> zona2;
     private List<ImageView> zona3;
     private List<ImageView> zona4;
-    private List<Pokemon> zona1Pokemons;
-    private List<Pokemon> zona2Pokemons;
-    private List<Pokemon> zona3Pokemons;
-    private List<Pokemon> zona4Pokemons;
-    private List<Pokemon> pokemonsAlineados;
+    private List<PokemonDTO> zona1Pokemons;
+    private List<PokemonDTO> zona2Pokemons;
+    private List<PokemonDTO> zona3Pokemons;
+    private List<PokemonDTO> zona4Pokemons;
+    private List<PokemonDTO> pokemonsAlineados;
     private ImageView ivHome;
 
     public AlignmentFragment() {
@@ -149,11 +151,11 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
         ivPokedex.setOnClickListener(this);
         ivBattle.setOnClickListener(this);
         ivMarket.setOnClickListener(this);
-        api.getTrainerPokemons(1).enqueue(new Callback<List<Pokemon>>() {
+        api.getTrainerPokemons(1).enqueue(new Callback<List<PokemonDTO>>() {
             @Override
-            public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
+            public void onResponse(Call<List<PokemonDTO>> call, Response<List<PokemonDTO>> response) {
                 if (response.isSuccessful()) {
-                    List<Pokemon> pokemons = response.body();
+                    List<PokemonDTO> pokemons = response.body();
                     Log.d("INFO ", pokemons.toString());
                     rvPokemonsAliniacion = view.findViewById(R.id.rvPokemonsAlignment);
                     AlignmentAdapter adapter = new AlignmentAdapter(pokemons, listener);
@@ -163,7 +165,7 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
             }
 
             @Override
-            public void onFailure(Call<List<Pokemon>> call, Throwable t) {
+            public void onFailure(Call<List<PokemonDTO>> call, Throwable t) {
 
             }
         });
@@ -180,7 +182,7 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
         if (v.getId() == ivHome.getId() || v.getId() == ivTrainer.getId() || v.getId() == ivBattle.getId() || v.getId() == ivMarket.getId() || v.getId() == ivPokedex.getId()) {
             Log.d("INFO ", String.valueOf(pokemonsAlineados.size()));
             if (pokemonsAlineados.size() == 11) {
-                List<Pokemon> pokemonsAlineados = new ArrayList<>();
+                List<PokemonDTO> pokemonsAlineados = new ArrayList<>();
                 pokemonsAlineados.addAll(zona1Pokemons);
                 pokemonsAlineados.addAll(zona2Pokemons);
                 pokemonsAlineados.addAll(zona3Pokemons);
@@ -191,15 +193,12 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
                         if(response.isSuccessful()){
                             if(response.body()){
                                 listenerMainActivity.onClick(v.getId());
-                            }else {
-                                Toast.makeText(getContext(), "Esta PUTA MIERDA no va", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Boolean> call, Throwable t) {
-
                     }
                 });
             } else {
@@ -224,51 +223,50 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onClick(int position) {
         if (images.size() != 0) {
-            api.getPokemon(position).enqueue(new Callback<Pokemon>() {
+            api.getPokemon(position).enqueue(new Callback<PokemonDTO>() {
                 @Override
-                public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                public void onResponse(Call<PokemonDTO> call, Response<PokemonDTO> response) {
                     if (response.isSuccessful()) {
-                        Pokemon pokemon = response.body();
-                        Log.d("INFO ",pokemon.toString());
-                        if (!pokemonsAlineados.contains(pokemon)) {
-                            api.getAlineaciones().enqueue(new Callback<List<Alineacion>>() {
+                        PokemonDTO pokemonDTO = response.body();
+                        if (!pokemonsAlineados.contains(pokemonDTO)) {
+                            api.getAlineaciones().enqueue(new Callback<List<AlineacionDTO>>() {
                                 @Override
-                                public void onResponse(Call<List<Alineacion>> call, Response<List<Alineacion>> response) {
-                                    List<Alineacion> alineaciones = response.body();
-                                    pokemonsAlineados.add(pokemon);
+                                public void onResponse(Call<List<AlineacionDTO>> call, Response<List<AlineacionDTO>> response) {
+                                    List<AlineacionDTO> alineaciones = response.body();
+                                    pokemonsAlineados.add(pokemonDTO);
                                     ImageView imageSeleted = images.pop();
                                     if (zona1.contains(imageSeleted)) {
-                                        pokemon.setAlineacion(alineaciones.get(0));
-                                        zona1Pokemons.add(pokemon);
+                                        pokemonDTO.setAlineacion(alineaciones.get(0).getId());
+                                        zona1Pokemons.add(pokemonDTO);
                                     } else if (zona2.contains(imageSeleted)) {
-                                        pokemon.setAlineacion(alineaciones.get(1));
-                                        zona2Pokemons.add(pokemon);
+                                        pokemonDTO.setAlineacion(alineaciones.get(1).getId());
+                                        zona2Pokemons.add(pokemonDTO);
                                     } else if (zona3.contains(imageSeleted)) {
-                                        pokemon.setAlineacion(alineaciones.get(2));
-                                        zona3Pokemons.add(pokemon);
+                                        pokemonDTO.setAlineacion(alineaciones.get(2).getId());
+                                        zona3Pokemons.add(pokemonDTO);
                                     } else {
-                                        pokemon.setAlineacion(alineaciones.get(3));
-                                        zona4Pokemons.add(pokemon);
+                                        pokemonDTO.setAlineacion(alineaciones.get(3).getId());
+                                        zona4Pokemons.add(pokemonDTO);
                                     }
-                                    Picasso.get().load(pokemon.getHiresURL()).into(imageSeleted);
+                                    Picasso.get().load(pokemonDTO.getHiresURL()).into(imageSeleted);
                                     imageSeleted.setBackgroundColor(getContext().getColor(R.color.no_background));
                                 }
 
                                 @Override
-                                public void onFailure(Call<List<Alineacion>> call, Throwable t) {
+                                public void onFailure(Call<List<AlineacionDTO>> call, Throwable t) {
                                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                                     Log.d("Error",t.getMessage());
                                 }
                             });
                         } else {
-                            Toast.makeText(getContext(), pokemon.getName() + " ya esta alineado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), pokemonDTO.getName() + " ya esta alineado", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Pokemon> call, Throwable t) {
+                public void onFailure(Call<PokemonDTO> call, Throwable t) {
                     Log.d("Error",t.getMessage());
                 }
             });

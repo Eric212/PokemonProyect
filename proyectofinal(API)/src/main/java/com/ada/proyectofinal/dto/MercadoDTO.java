@@ -1,6 +1,7 @@
-package com.ericsospedra.pokemonproyect.dao;
+package com.ada.proyectofinal.dto;
 
-import com.ericsospedra.pokemonproyect.models.Mercado;
+
+import com.ada.proyectofinal.entities.Mercado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,6 @@ public class MercadoDTO {
         this.id = id;
         this.fecha = fecha;
         this.pokemons = pokemons;
-    }
-
-    public static MercadoDTO fromMercado(Mercado mercado){
-        MercadoDTO mercadoDTO = new MercadoDTO();
-        mercadoDTO.setId(mercado.getId());
-        mercadoDTO.setFecha(mercado.getFecha());
-        mercadoDTO.setPokemons(PokemonDTO.listaPokemonDTO(mercado.getPokemons()));
-        return mercadoDTO;
     }
 
     // Getters y setters

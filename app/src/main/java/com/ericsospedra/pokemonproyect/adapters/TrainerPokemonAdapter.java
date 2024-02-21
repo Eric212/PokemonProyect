@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IOnLongClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.squareup.picasso.Picasso;
@@ -18,9 +19,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class TrainerPokemonAdapter extends RecyclerView.Adapter<TrainerPokemonAdapter.TrainerPokemonViewHolder> {
-    private List<Pokemon> pokemons;
+    private List<PokemonDTO> pokemons;
     private IOnLongClickListener listener;
-    public TrainerPokemonAdapter(List<Pokemon> pokemons, IOnLongClickListener listener) {
+    public TrainerPokemonAdapter(List<PokemonDTO> pokemons, IOnLongClickListener listener) {
         this.pokemons = pokemons;
         this.listener = listener;
     }
@@ -56,7 +57,7 @@ public class TrainerPokemonAdapter extends RecyclerView.Adapter<TrainerPokemonAd
             itemView.setOnLongClickListener(this);
         }
 
-        public void onBindPokemon(Pokemon pokemon) {
+        public void onBindPokemon(PokemonDTO pokemon) {
             Picasso.get().load(pokemon.getHiresURL()).into(ivPokemon);
             tvAlineacion.setText(pokemon.getName());
             pbLifeAlineacion.setProgress(pokemon.getHp());

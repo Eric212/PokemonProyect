@@ -1,4 +1,4 @@
-package com.ericsospedra.pokemonproyect.dao;
+package com.ericsospedra.pokemonproyect.dto;
 public class AlineacionDTO {
 
     private int id;
@@ -27,6 +27,14 @@ public class AlineacionDTO {
 
     public void setZona(String zona) {
         this.zona = zona;
+    }
+
+    @Override
+    public String toString() {
+        return "AlineacionDTO{" +
+                "id=" + id +
+                ", zona='" + zona + '\'' +
+                '}';
     }
 }
 

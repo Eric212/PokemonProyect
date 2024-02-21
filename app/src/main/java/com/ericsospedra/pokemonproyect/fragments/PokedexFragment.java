@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
 import com.ericsospedra.pokemonproyect.adapters.PokemonAdapter;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
@@ -26,7 +27,7 @@ import retrofit2.Response;
 
 public class PokedexFragment extends Fragment implements View.OnClickListener {
     private IApiService api;
-    private List<Pokemon> pokemons;
+    private List<PokemonDTO> pokemons;
     private IOnClickListener listener;
     private View menuLayout;
     private ImageView ivTrainer;
@@ -51,9 +52,9 @@ public class PokedexFragment extends Fragment implements View.OnClickListener {
         ivPokedex.setOnClickListener(this);
         ivBattle.setOnClickListener(this);
         ivMarket.setOnClickListener(this);
-        api.getPokemons().enqueue(new Callback<List<Pokemon>>() {
+        api.getPokemons().enqueue(new Callback<List<PokemonDTO>>() {
             @Override
-            public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
+            public void onResponse(Call<List<PokemonDTO>> call, Response<List<PokemonDTO>> response) {
                 pokemons = response.body();
                 RecyclerView rvPokemons = view.findViewById(R.id.rvPokemons);
                 PokemonAdapter adapter = new PokemonAdapter(pokemons,listener);
@@ -62,7 +63,7 @@ public class PokedexFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<List<Pokemon>> call, Throwable t) {
+            public void onFailure(Call<List<PokemonDTO>> call, Throwable t) {
 
             }
         });

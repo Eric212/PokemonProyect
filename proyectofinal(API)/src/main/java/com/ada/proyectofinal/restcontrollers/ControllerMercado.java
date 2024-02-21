@@ -1,7 +1,9 @@
 package com.ada.proyectofinal.restcontrollers;
 
 import com.ada.proyectofinal.Parser.Parser;
+import com.ada.proyectofinal.dto.PokemonDTO;
 import com.ada.proyectofinal.entities.Pokemon;
+import com.ada.proyectofinal.services.DTOConverterAndReverse;
 import com.ada.proyectofinal.services.ServicioMercado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,12 @@ public class ControllerMercado {
     @Autowired
     private ServicioMercado servicioMercado;
 
+    @Autowired
+    private DTOConverterAndReverse dtoConverterAndReverse;
 
     @GetMapping("mostrarMercado")
-    public ResponseEntity<List<Pokemon>> mostrarMercado(){
-        List<Pokemon> pokemons = servicioMercado.ListarPokemonsDelMercado();
-        return new ResponseEntity<>(pokemons, HttpStatus.OK);
+    public List<PokemonDTO> mostrarMercado(){
+        return dtoConverterAndReverse.listaPokemonDTO(servicioMercado.ListarPokemonsDelMercado());
     }
 
 }

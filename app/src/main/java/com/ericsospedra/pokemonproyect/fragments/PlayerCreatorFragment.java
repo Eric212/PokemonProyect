@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.EntrenadorDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Entrenador;
@@ -81,8 +82,9 @@ public class PlayerCreatorFragment extends Fragment {
                     if(imageId==null) {
                         imageId = R.drawable.avatar243;
                     }
-                    Entrenador entrenador = new Entrenador(etNombreJugador.getText().toString(),etApellidoJugador.getText().toString(),parametroGenero,String.valueOf(imageId),150000f);
-                    api.entrenadorAdd(entrenador).enqueue(new Callback<Boolean>() {
+                    Entrenador entrenador = new Entrenador(etNombreJugador.getText().toString(),etApellidoJugador.getText().toString(),parametroGenero,String.valueOf(imageId),150000f, null);
+                    EntrenadorDTO entrenadorDTO = EntrenadorDTO.fromEntrenador(entrenador);
+                    api.entrenadorAdd(entrenadorDTO).enqueue(new Callback<Boolean>() {
                         @Override
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                             if(response.isSuccessful()){

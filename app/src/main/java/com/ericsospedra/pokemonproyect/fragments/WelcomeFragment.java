@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
 import com.ericsospedra.pokemonproyect.adapters.AlineacionAdapter;
+import com.ericsospedra.pokemonproyect.dto.EntrenadorDTO;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
+import com.ericsospedra.pokemonproyect.dto.UsuarioDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Entrenador;
@@ -54,11 +57,11 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         api = RestClient.getInstance();
-        api.getPokemonsAlineados(1).enqueue(new Callback<List<Pokemon>>() {
+        api.getPokemonsAlineados(1).enqueue(new Callback<List<PokemonDTO>>() {
             @Override
-            public void onResponse(Call<List<Pokemon>> call, Response<List<Pokemon>> response) {
+            public void onResponse(Call<List<PokemonDTO>> call, Response<List<PokemonDTO>> response) {
                 if (response.isSuccessful()) {
-                    List<Pokemon> pokemonsAlineados = response.body();
+                    List<PokemonDTO> pokemonsAlineados = response.body();
                     rvPokemons = view.findViewById(R.id.rvPokemonsAlineacion);
                     if(pokemonsAlineados.size()!=0) {
                         AlineacionAdapter adapter = new AlineacionAdapter(pokemonsAlineados);
@@ -76,7 +79,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
             @Override
-            public void onFailure(Call<List<Pokemon>> call, Throwable t) {
+            public void onFailure(Call<List<PokemonDTO>> call, Throwable t) {
                 Log.e(" Error ","Que no le da la gana ir");
             }
         });
@@ -86,15 +89,15 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
         ivPokedex = menuLayout.findViewById(R.id.ivPokedex);
         ivBattle = menuLayout.findViewById(R.id.ivBattle);
         ivMarket = menuLayout.findViewById(R.id.ivMarket);
-        api.findUserByName(sharedPreferences.getString("username",""))  .enqueue(new Callback<Usuario>() {
+        api.findUserByName(sharedPreferences.getString("username",""))  .enqueue(new Callback<UsuarioDTO>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+            public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
                 if(response.isSuccessful()){
                     Log.d("INFO ",response.body().toString());
-                    api.recuperarEntrenadorPorUsuario(response.body().getId()).enqueue(new Callback<Entrenador>() {
+                    api.recuperarEntrenadorPorUsuario(response.body().getId()).enqueue(new Callback<EntrenadorDTO>() {
                         @Override
-                        public void onResponse(Call<Entrenador> call, Response<Entrenador> response) {
-                            Entrenador entrenador = response.body();
+                        public void onResponse(Call<EntrenadorDTO> call, Response<EntrenadorDTO> response) {
+                            EntrenadorDTO entrenador = response.body();
                             Log.d("INFO ",entrenador.toString());
                             if(entrenador.isGenero()){
                                 ivTrainer.setImageResource(view.getContext().getResources().getIdentifier("girl_trainer","drawable",view.getContext().getPackageName()));
@@ -104,7 +107,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
                         }
 
                         @Override
-                        public void onFailure(Call<Entrenador> call, Throwable t) {
+                        public void onFailure(Call<EntrenadorDTO> call, Throwable t) {
 
                         }
                     });
@@ -112,7 +115,7 @@ public class WelcomeFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+            public void onFailure(Call<UsuarioDTO> call, Throwable t) {
 
             }
         });

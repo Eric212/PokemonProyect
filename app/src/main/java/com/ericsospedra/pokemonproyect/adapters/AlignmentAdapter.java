@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.squareup.picasso.Picasso;
@@ -19,9 +20,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class AlignmentAdapter extends RecyclerView.Adapter<AlignmentAdapter.PokemonAlignmentDetailViewHolder> {
-    private List<Pokemon> pokemons;
+    private List<PokemonDTO> pokemons;
     private IOnClickListener listener;
-    public AlignmentAdapter(List<Pokemon> pokemons, IOnClickListener listener) {
+    public AlignmentAdapter(List<PokemonDTO> pokemons, IOnClickListener listener) {
         this.pokemons = pokemons;
         this.listener = listener;
     }
@@ -60,7 +61,7 @@ public class AlignmentAdapter extends RecyclerView.Adapter<AlignmentAdapter.Poke
             itemView.setOnClickListener(this);
         }
 
-        public void onBindPokemonAlignmentDetail(Pokemon pokemon) {
+        public void onBindPokemonAlignmentDetail(PokemonDTO pokemon) {
             Picasso.get().load(pokemon.getHiresURL()).into(ivPokemonAlignmentDetail);
             tvPokemonNameAlignment.setText(pokemon.getName());
             pbLifeAlignment.setProgress(pokemon.getHp());

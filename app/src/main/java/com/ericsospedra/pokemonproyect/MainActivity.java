@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.ericsospedra.pokemonproyect.dto.UsuarioDTO;
 import com.ericsospedra.pokemonproyect.fragments.AlignmentFragment;
 import com.ericsospedra.pokemonproyect.fragments.BattleFragment;
 import com.ericsospedra.pokemonproyect.fragments.MarketFragment;
@@ -61,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()) {
                         if (response.body()) {
-                            api.findUserByName(username).enqueue(new Callback<Usuario>() {
+                            api.findUserByName(username).enqueue(new Callback<UsuarioDTO>() {
                                 @Override
-                                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
                                     if (response.isSuccessful()) {
                                         token = response.body().getToken();
                                         if (getSharedPreferences("login", 0).getString("token", "").equals(token)) {
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements
                                 }
 
                                 @Override
-                                public void onFailure(Call<Usuario> call, Throwable t) {
+                                public void onFailure(Call<UsuarioDTO> call, Throwable t) {
                                     Log.e(MainActivity.class.getSimpleName(), t.getMessage());
                                 }
                             });

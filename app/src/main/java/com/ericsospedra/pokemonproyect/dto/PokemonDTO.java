@@ -1,8 +1,11 @@
-package com.ericsospedra.pokemonproyect.dao;
+package com.ericsospedra.pokemonproyect.dto;
+
+import androidx.annotation.Nullable;
 
 import com.ericsospedra.pokemonproyect.models.Pokemon;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PokemonDTO {
@@ -55,9 +58,15 @@ public class PokemonDTO {
         pokemonDTO.setGender(pokemon.getGender());
         pokemonDTO.setValor(pokemon.getValor());
         pokemonDTO.setHiresURL(pokemon.getHiresURL());
-        pokemonDTO.setEntrenador(pokemon.getEntrenador());
-        pokemonDTO.setMercadoId(pokemon.getMercado().getId());
-        pokemonDTO.setAlineacionId(pokemon.getAlineacion().getId());
+        if(pokemon.getEntrenador()!=null) {
+            pokemonDTO.setEntrenador(pokemon.getEntrenador().getId());
+        }
+        if(pokemon.getMercado()!=null) {
+            pokemonDTO.setMercado(pokemon.getMercado().getId());
+        }
+        if(pokemon.getAlineacion()!=null) {
+            pokemonDTO.setAlineacion(pokemon.getAlineacion().getId());
+        }
         return pokemonDTO;
     }
     public static List<PokemonDTO> listaPokemonDTO(List<Pokemon> pokemons) {
@@ -75,9 +84,15 @@ public class PokemonDTO {
                  pokemonDTO.setGender(pokemon.getGender());
                  pokemonDTO.setValor(pokemon.getValor());
                  pokemonDTO.setHiresURL(pokemon.getHiresURL());
-                 pokemonDTO.setEntrenador(pokemon.getEntrenador());
-                 pokemonDTO.setMercadoId(pokemon.getMercado().getId());
-                 pokemonDTO.setAlineacionId(pokemon.getAlineacion().getId());
+                 if(pokemon.getEntrenador()!=null) {
+                     pokemonDTO.setEntrenador(pokemon.getEntrenador().getId());
+                 }
+                 if(pokemon.getMercado()!=null) {
+                     pokemonDTO.setMercado(pokemon.getMercado().getId());
+                 }
+                 if(pokemon.getAlineacion()!=null) {
+                     pokemonDTO.setAlineacion(pokemon.getAlineacion().getId());
+                 }
                  return pokemonDTO;
              })
              .collect(Collectors.toList());
@@ -180,19 +195,56 @@ public class PokemonDTO {
         this.entrenador = entrenador;
     }
 
-    public int getMercadoId() {
+    public int getMercado() {
         return mercadoId;
     }
 
-    public void setMercadoId(int mercadoId) {
+    public void setMercado(int mercadoId) {
         this.mercadoId = mercadoId;
     }
 
-    public int getAlineacionId() {
+    public int getAlineacion() {
         return alineacionId;
     }
 
-    public void setAlineacionId(int alineacionId) {
+    public void setAlineacion(int alineacionId) {
         this.alineacionId = alineacionId;
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        PokemonDTO other = (PokemonDTO) obj;
+        return id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, level, hp, attack, defence, speed, gender, valor, hiresURL, entrenador, mercadoId, alineacionId);
+    }
+
+
+    @Override
+    public String toString() {
+        return "PokemonDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defence=" + defence +
+                ", speed=" + speed +
+                ", gender='" + gender + '\'' +
+                ", valor=" + valor +
+                ", hiresURL='" + hiresURL + '\'' +
+                ", entrenador=" + entrenador +
+                ", mercadoId=" + mercadoId +
+                ", alineacionId=" + alineacionId +
+                '}';
     }
 }

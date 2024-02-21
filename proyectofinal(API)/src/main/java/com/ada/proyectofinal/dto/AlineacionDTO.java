@@ -1,23 +1,21 @@
-package com.ericsospedra.pokemonproyect.models;
-
+package com.ada.proyectofinal.dto;
 
 import java.util.List;
 
-public class Alineacion {
+public class AlineacionDTO {
 
     private int id;
-
     private String zona;
 
-    public Alineacion(int id, String zona) {
+    public AlineacionDTO() {
+    }
+
+    public AlineacionDTO(int id, String zona) {
         this.id = id;
         this.zona = zona;
     }
 
-    public Alineacion(int id) {
-        this.id = id;
-    }
-
+    // Getters y setters
     public int getId() {
         return id;
     }
@@ -33,4 +31,6 @@ public class Alineacion {
     public void setZona(String zona) {
         this.zona = zona;
     }
+
 }
+

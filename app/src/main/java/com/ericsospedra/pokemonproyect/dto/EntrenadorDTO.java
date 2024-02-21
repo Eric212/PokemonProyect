@@ -1,6 +1,7 @@
-package com.ericsospedra.pokemonproyect.dao;
+package com.ericsospedra.pokemonproyect.dto;
+
+
 import com.ericsospedra.pokemonproyect.models.Entrenador;
-import com.ericsospedra.pokemonproyect.models.Pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +15,22 @@ public class EntrenadorDTO {
     private String icono;
     private float dinero;
     private List<PokemonDTO> pokemons = new ArrayList<>();
-    private List<Resultado> resultados = new ArrayList<>();
+    private List<ResultadoDTO> resultados = new ArrayList<>();
+    private int usuario_id;
 
     public EntrenadorDTO() {
     }
 
-    public EntrenadorDTO(String nombre, String apellido, boolean genero, String icono, float dinero) {
+    public EntrenadorDTO(String nombre, String apellido, boolean genero, String icono, float dinero,int usurio_id) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.genero = genero;
         this.icono = icono;
         this.dinero = dinero;
+        this.usuario_id = usurio_id;
     }
 
-    public EntrenadorDTO(int id, String nombre, String apellido, boolean genero, String icono, float dinero, List<PokemonDTO> pokemons, List<Resultado> resultados) {
+    public EntrenadorDTO(int id, String nombre, String apellido, boolean genero, String icono, float dinero, List<PokemonDTO> pokemons, List<ResultadoDTO> resultados) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -36,6 +39,7 @@ public class EntrenadorDTO {
         this.dinero = dinero;
         this.pokemons = pokemons;
         this.resultados = resultados;
+
     }
 
     public static EntrenadorDTO fromEntrenador(Entrenador entrenador) {
@@ -47,6 +51,9 @@ public class EntrenadorDTO {
         entrenadorDTO.setIcono(entrenador.getIcono());
         entrenadorDTO.setDinero(entrenador.getDinero());
         entrenadorDTO.setPokemons(PokemonDTO.listaPokemonDTO(entrenador.getPokemons()));
+        if(entrenador.getUsuario()!=null) {
+            entrenadorDTO.setUsuario_id(entrenador.getUsuario().getId());
+        }
         return entrenadorDTO;
     }
 
@@ -107,12 +114,20 @@ public class EntrenadorDTO {
         this.pokemons = pokemons;
     }
 
-    public List<Resultado> getResultados() {
+    public List<ResultadoDTO> getResultados() {
         return resultados;
     }
 
-    public void setResultados(List<Resultado> resultados) {
+    public void setResultados(List<ResultadoDTO> resultados) {
         this.resultados = resultados;
+    }
+
+    public int getUsuario() {
+        return usuario_id;
+    }
+
+    public void setUsuario_id(int usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
     @Override

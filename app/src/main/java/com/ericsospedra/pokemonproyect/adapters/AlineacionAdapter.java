@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ericsospedra.pokemonproyect.R;
+import com.ericsospedra.pokemonproyect.dto.AlineacionDTO;
+import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.models.Alineacion;
 import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.ericsospedra.pokemonproyect.models.RestClient;
@@ -24,9 +26,9 @@ import retrofit2.Response;
 
 public class AlineacionAdapter extends RecyclerView.Adapter<AlineacionAdapter.AlieacionViewHolder> {
 
-    private List<Pokemon> alineacion;
+    private List<PokemonDTO> alineacion;
 
-    public AlineacionAdapter(List<Pokemon> alineacion) {
+    public AlineacionAdapter(List<PokemonDTO> alineacion) {
         this.alineacion = alineacion;
     }
 
@@ -60,18 +62,18 @@ public class AlineacionAdapter extends RecyclerView.Adapter<AlineacionAdapter.Al
             pbLifeAlineacion = itemView.findViewById(R.id.pbLifeAlineacion);
         }
 
-        public void onBindAlineacion(Pokemon pokemon) {
+        public void onBindAlineacion(PokemonDTO pokemon) {
             Picasso.get().load(pokemon.getHiresURL()).into(ivPokemon);
-            RestClient.getInstance().getAlineacion(pokemon.getAlineacion().getId()).enqueue(new Callback<Alineacion>() {
+            RestClient.getInstance().getAlineacion(pokemon.getAlineacion()).enqueue(new Callback<AlineacionDTO>() {
                 @Override
-                public void onResponse(Call<Alineacion> call, Response<Alineacion> response) {
+                public void onResponse(Call<AlineacionDTO> call, Response<AlineacionDTO> response) {
                     if (response.isSuccessful()) {
                         tvAlineacion.setText(response.body().getZona());
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Alineacion> call, Throwable t) {
+                public void onFailure(Call<AlineacionDTO> call, Throwable t) {
 
                 }
             });

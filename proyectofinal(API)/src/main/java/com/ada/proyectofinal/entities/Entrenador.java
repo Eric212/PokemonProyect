@@ -55,5 +55,4 @@ public class Entrenador {
     @JoinColumn(name = "usuario_id")
     @JsonBackReference("usuario-entrenador")
     private Usuario usuario;
-
 }

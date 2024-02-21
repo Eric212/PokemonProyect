@@ -1,4 +1,6 @@
-package com.ericsospedra.pokemonproyect.dao;
+package com.ericsospedra.pokemonproyect.dto;
+
+import com.ericsospedra.pokemonproyect.models.Usuario;
 
 public class UsuarioDTO {
     private int id;
@@ -20,6 +22,15 @@ public class UsuarioDTO {
         this.username = username;
         this.password = password;
         this.token = token;
+    }
+
+    public static UsuarioDTO fromUsuario(Usuario usuario) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setUsername(usuario.getUsername());
+        usuarioDTO.setPassword(usuario.getPassword());
+        usuarioDTO.setToken(usuarioDTO.getToken());
+        return usuarioDTO;
     }
 
     // Getters y setters

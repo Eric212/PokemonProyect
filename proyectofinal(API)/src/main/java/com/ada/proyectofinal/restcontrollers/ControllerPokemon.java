@@ -1,13 +1,13 @@
 package com.ada.proyectofinal.restcontrollers;
 
+import com.ada.proyectofinal.dto.PokemonDTO;
 import com.ada.proyectofinal.entities.Pokemon;
+import com.ada.proyectofinal.services.DTOConverterAndReverse;
 import com.ada.proyectofinal.services.ServicioPokemon;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pokemons")
@@ -15,30 +15,33 @@ public class ControllerPokemon {
     @Autowired
     private ServicioPokemon servicioPokemon;
 
+    @Autowired
+    private DTOConverterAndReverse dtoConverterAndReverse;
+
     @GetMapping
-    public List<Pokemon> showAllPokemons(){
-        return servicioPokemon.findAll();
+    public List<PokemonDTO> showAllPokemons(){
+        return dtoConverterAndReverse.listaPokemonDTO(servicioPokemon.findAll());
     }
 
     @GetMapping("/entrenador/{id}")
-    public List<Pokemon> showTrainerPokemons(@PathVariable("id") int id){
-        return servicioPokemon.getPokemonsByEntrenadorId(id);
+    public List<PokemonDTO> showTrainerPokemons(@PathVariable("id") int id){
+        return dtoConverterAndReverse.listaPokemonDTO(servicioPokemon.getPokemonsByEntrenadorId(id));
     }
     @GetMapping("/{id}")
-    public Optional<Pokemon> showPokemon(@PathVariable("id") int id){
-        return servicioPokemon.findById(id);
+    public PokemonDTO showPokemon(@PathVariable("id") int id){
+        return dtoConverterAndReverse.fromPokemon(servicioPokemon.findById(id));
     }
 
 
     @GetMapping("/alineados/{id}")
-    public List<Pokemon> getPokemons(@PathVariable("id")int id){
-        return servicioPokemon.getPokemonsAlineados(id);
+    public List<PokemonDTO> getPokemons(@PathVariable("id")int id){
+        return dtoConverterAndReverse.listaPokemonDTO(servicioPokemon.getPokemonsAlineados(id));
     }
 
     @PostMapping("/alinear")
-    public Boolean crearAlineacion(@RequestBody Pokemon pokemons){
+    public Boolean crearAlineacion(@RequestBody List<PokemonDTO> pokemons){
         System.out.println(pokemons.toString());
-        servicioPokemon.save(pokemons);
+        servicioPokemon.saveAll(dtoConverterAndReverse.listaPokemon(pokemons));
         return true;
     }
 }
