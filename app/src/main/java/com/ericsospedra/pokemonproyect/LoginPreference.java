@@ -36,6 +36,8 @@ public class LoginPreference extends AppCompatActivity implements View.OnFocusCh
         preferences = getSharedPreferences("login", 0);
         etUsername.setOnFocusChangeListener(this);
         etPassword.setOnFocusChangeListener(this);
+        etIP.setOnFocusChangeListener(this);
+        etPuerto.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -50,11 +52,11 @@ public class LoginPreference extends AppCompatActivity implements View.OnFocusCh
             editor.apply();
         }else if(v.getId() == R.id.etIP && !hasFocus){
             editor = preferences.edit();
-            editor.putString("ip", etUsername.getText().toString());
+            editor.putString("ip", etIP.getText().toString());
             editor.apply();
-        }else {
+        }else{
             editor = preferences.edit();
-            editor.putString("puerto", etUsername.getText().toString());
+            editor.putString("puerto", etPuerto.getText().toString());
             editor.apply();
         }
     }

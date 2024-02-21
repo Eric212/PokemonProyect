@@ -44,11 +44,11 @@ public class Entrenador {
     private Combate  combate;
 
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
-    @JsonManagedReference("entrenador-pokemons")
+    @JsonManagedReference
     private List<Pokemon> pokemons = new ArrayList<>();
 
     @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
-       @JsonManagedReference("entrenador-resultados")
+    @JsonManagedReference("entrenador-resultados")
     private List<Resultado> resultados = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)

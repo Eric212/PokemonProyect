@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        android:background="@color/pokemon_background"
+        android:padding="2dp"
         android:text="TextView"
         android:textColor="@color/pokemon_letters"
         app:layout_constraintBottom_toBottomOf="parent"

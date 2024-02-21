@@ -13,14 +13,14 @@ public class Pokemon {
     private String gender;
     private float valor;
     private String hiresURL;
-    private Entrenador entrenador;
+    private int entrenador;
     private Mercado mercado;
     private Alineacion alineacion;
 
     public Pokemon() {
     }
 
-    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, Entrenador entrenador, Mercado mercado, Alineacion alineacion) {
+    public Pokemon(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, int entrenador, Mercado mercado, Alineacion alineacion) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -77,7 +77,7 @@ public class Pokemon {
         this.hiresURL = hiresURL;
     }
 
-    public void setEntrenador(Entrenador entrenador) {
+    public void setEntrenador(int entrenador) {
         this.entrenador = entrenador;
     }
 
@@ -133,12 +133,8 @@ public class Pokemon {
         return hiresURL;
     }
 
-    public Entrenador getEntrenador() {
+    public int getEntrenador() {
         return entrenador;
-    }
-
-    public Mercado getMercado_id() {
-        return mercado;
     }
 
     public Alineacion getAlineacion() {
@@ -167,7 +163,7 @@ public class Pokemon {
                 ", gender='" + gender + '\'' +
                 ", valor=" + valor +
                 ", hiresURL='" + hiresURL + '\'' +
-                ", entrenador=" + (entrenador != null ? entrenador.getId() : null) +
+                ", entrenador=" + entrenador +
                 ", mercado=" + (mercado != null ? mercado.getId() : null) +
                 ", alineacion=" + (alineacion != null ? alineacion.getId() : null) +
                 '}';

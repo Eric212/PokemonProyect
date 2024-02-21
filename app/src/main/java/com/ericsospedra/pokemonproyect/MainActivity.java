@@ -1,5 +1,6 @@
 package com.ericsospedra.pokemonproyect;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -39,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        SharedPreferences preferences = getSharedPreferences("login", 0);
+        if (!preferences.getString("ip", "").equals("") && !preferences.getString("ip", "").equals("")){
+            RestClient.setIp(preferences.getString("ip", ""));
+            RestClient.setPuerto(preferences.getString("puerto", ""));
+         }
         id = new Stack<>();
         api = RestClient.getInstance();
         manager = getSupportFragmentManager();

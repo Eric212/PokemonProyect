@@ -55,6 +55,21 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         super(R.layout.start_menu_fragment);
     }
 
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (preference != null) {
+            etUsername.setText(preference.getString("username", ""));
+            etPassword.setText(preference.getString("password", ""));
+            token = new Token(preference.getString("token", ""));
+            RestClient.setIp(preference.getString("ip", ""));
+            RestClient.setPuerto(preference.getString("puerto", ""));
+            cbRemember.setChecked(true);
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -67,14 +82,12 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         ivPreference = view.findViewById(R.id.ivPreference);
         cbRemember = view.findViewById(R.id.cbRemember);
         if (preference != null) {
-            if (!preference.getString("username", "").isEmpty()) {
-                etUsername.setText(preference.getString("username", ""));
-                etPassword.setText(preference.getString("password", ""));
-                token = new Token(preference.getString("token",""));
-                RestClient.setIp(preference.getString("ip",""));
-                RestClient.setPuerto(preference.getString("puerto",""));
-                cbRemember.setChecked(true);
-            }
+            etUsername.setText(preference.getString("username", ""));
+            etPassword.setText(preference.getString("password", ""));
+            token = new Token(preference.getString("token", ""));
+            RestClient.setIp(preference.getString("ip", ""));
+            RestClient.setPuerto(preference.getString("puerto", ""));
+            cbRemember.setChecked(true);
         }
         ivPreference.setOnClickListener(this);
         bLogIn.setOnClickListener(this);
@@ -86,7 +99,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         this.context = context;
         listener = (IOnClickListener) context;
-        preference = context.getSharedPreferences("login",0);
+        preference = context.getSharedPreferences("login", 0);
     }
 
     @Override
@@ -104,11 +117,11 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                     token = response.body();
                     if (!token.getToken().equals("")) {
                         tvAlert.setVisibility(View.GONE);
-                        if(!preference.getString("token","").equals(token.getToken())){
-                            Log.d("Info ","Añado el token porque no lo tenia");
-                            preference.edit().putString("token",token.getToken()).apply();
+                        if (!preference.getString("token", "").equals(token.getToken())) {
+                            Log.d("Info ", "Añado el token porque no lo tenia");
+                            preference.edit().putString("token", token.getToken()).apply();
                         }
-                        Log.d("Info ","Apunto de saltar al main");
+                        Log.d("Info ", "Apunto de saltar al main");
                         listener.onClick(v.getId());
                     } else {
                         tvAlert.setVisibility(View.VISIBLE);
@@ -132,7 +145,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<Token> call, Response<Token> response) {
                     token = response.body();
-                    Log.d("Info ",token.getToken());
+                    Log.d("Info ", token.getToken());
                     if (!token.getToken().equals("")) {
                         if (cbRemember.isChecked()) {
                             if (preference.getString("username", "").isEmpty()) {
@@ -140,8 +153,8 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                                 editor.putString("username", etUsername.getText().toString());
                                 editor.putString("password", etPassword.getText().toString());
                                 editor.putString("token", token.getToken());
-                                editor.putString("ip",RestClient.getIp());
-                                editor.putString("puerto",RestClient.getPuerto());
+                                editor.putString("ip", RestClient.getIp());
+                                editor.putString("puerto", RestClient.getPuerto());
                                 editor.apply();
                             }
                         }
@@ -160,7 +173,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 }
             });
         } else {
-            if(preference!=null) {
+            if (preference != null) {
                 Intent intent = new Intent(context, LoginPreference.class);
                 intent.putExtra("username", preference.getString("username", ""));
                 intent.putExtra("password", preference.getString("password", ""));
@@ -168,7 +181,7 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 intent.putExtra("ip", preference.getString("ip", ""));
                 intent.putExtra("puerto", preference.getString("puerto", ""));
                 startActivity(intent);
-            }else{
+            } else {
                 Intent intent = new Intent(context, LoginPreference.class);
                 startActivity(intent);
             }

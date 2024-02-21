@@ -6,8 +6,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
-    private static String ip = "192.168.3.47";
-    private static String puerto = "8080";
+    private static String ip;
+    private static String puerto;
     private static IApiService instance;
     private RestClient(){
 

@@ -51,16 +51,22 @@ public class Pokemon {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "entrenador_id")
-    @JsonBackReference("entrenador-pokemons")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonBackReference
     private Entrenador entrenador;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mercado_id")
     @JsonBackReference("mercado-pokemons")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     private Mercado mercado;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "alineacion_id")
     @JsonBackReference("alineacion-pokemons")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     private Alineacion alineacion;
 }
