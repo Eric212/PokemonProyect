@@ -13,10 +13,8 @@ public class RestClient {
     }
     public synchronized static IApiService getInstance(){
         if(instance == null){
-            ip = "192.168.3.47";
-            puerto = "8080";
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://"+ip+":"+puerto+"/")
+                    .baseUrl("http://"+getIp()+":"+getPuerto()+"/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             instance = retrofit.create(IApiService.class);
