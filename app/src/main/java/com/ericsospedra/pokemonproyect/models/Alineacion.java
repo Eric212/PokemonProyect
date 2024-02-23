@@ -1,8 +1,6 @@
 package com.ericsospedra.pokemonproyect.models;
 
 
-import java.util.List;
-
 public class Alineacion {
 
     private int id;
