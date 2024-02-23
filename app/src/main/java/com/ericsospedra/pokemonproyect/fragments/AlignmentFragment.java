@@ -127,7 +127,6 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
         ivPokemonZona4Posicion2 = view.findViewById(R.id.ivPokemonZona4Posicion2);
         zona4.add(ivPokemonZona4Posicion1);
         zona4.add(ivPokemonZona4Posicion2);
-        rvPokemonsAliniacion = view.findViewById(R.id.rvPokemonsAlineacion);
         menuLayout = view.findViewById(R.id.iMenuAlignment);
         ivHome = menuLayout.findViewById(R.id.ivHome);
         ivTrainer = menuLayout.findViewById(R.id.ivTrainer);
@@ -182,11 +181,7 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
         if (v.getId() == ivHome.getId() || v.getId() == ivTrainer.getId() || v.getId() == ivBattle.getId() || v.getId() == ivMarket.getId() || v.getId() == ivPokedex.getId()) {
             Log.d("INFO ", String.valueOf(pokemonsAlineados.size()));
             if (pokemonsAlineados.size() == 11) {
-                List<PokemonDTO> pokemonsAlineados = new ArrayList<>();
-                pokemonsAlineados.addAll(zona1Pokemons);
-                pokemonsAlineados.addAll(zona2Pokemons);
-                pokemonsAlineados.addAll(zona3Pokemons);
-                pokemonsAlineados.addAll(zona4Pokemons);
+                Log.d("PokemonsAlineados",pokemonsAlineados.toString());
                 api.updateAlineacion(pokemonsAlineados).enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -233,22 +228,26 @@ public class AlignmentFragment extends Fragment implements View.OnClickListener,
                                 @Override
                                 public void onResponse(Call<List<AlineacionDTO>> call, Response<List<AlineacionDTO>> response) {
                                     List<AlineacionDTO> alineaciones = response.body();
-                                    pokemonsAlineados.add(pokemonDTO);
                                     ImageView imageSeleted = images.pop();
                                     if (zona1.contains(imageSeleted)) {
                                         pokemonDTO.setAlineacion(alineaciones.get(0).getId());
+                                        pokemonsAlineados.add(pokemonDTO);
                                         zona1Pokemons.add(pokemonDTO);
                                     } else if (zona2.contains(imageSeleted)) {
                                         pokemonDTO.setAlineacion(alineaciones.get(1).getId());
+                                        pokemonsAlineados.add(pokemonDTO);
                                         zona2Pokemons.add(pokemonDTO);
                                     } else if (zona3.contains(imageSeleted)) {
                                         pokemonDTO.setAlineacion(alineaciones.get(2).getId());
+                                        pokemonsAlineados.add(pokemonDTO);
                                         zona3Pokemons.add(pokemonDTO);
                                     } else {
                                         pokemonDTO.setAlineacion(alineaciones.get(3).getId());
+                                        pokemonsAlineados.add(pokemonDTO);
                                         zona4Pokemons.add(pokemonDTO);
                                     }
                                     Picasso.get().load(pokemonDTO.getHiresURL()).into(imageSeleted);
+                                    Log.d("Pokemon",pokemonDTO.toString());
                                     imageSeleted.setBackgroundColor(getContext().getColor(R.color.no_background));
                                 }
 

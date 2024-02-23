@@ -72,7 +72,6 @@ public class AlignmentAdapter extends RecyclerView.Adapter<AlignmentAdapter.Poke
 
         @Override
         public void onClick(View v) {
-            Log.d("Adapter: ",pokemons.get(getAdapterPosition()).toString());
             listener.onClick(pokemons.get(getAdapterPosition()).getId());
         }
     }

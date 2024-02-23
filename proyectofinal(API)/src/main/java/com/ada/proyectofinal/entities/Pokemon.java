@@ -53,7 +53,7 @@ public class Pokemon {
     @Column
     private String hiresURL;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "entrenador_id")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
@@ -73,4 +73,23 @@ public class Pokemon {
     @JsonIdentityReference(alwaysAsId = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     private Alineacion alineacion;
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defence=" + defence +
+                ", speed=" + speed +
+                ", gender='" + gender + '\'' +
+                ", valor=" + valor +
+                ", hiresURL='" + hiresURL + '\'' +
+                ", entrenador=" + (entrenador != null ? entrenador.getId() : null) +
+                ", mercado=" + (mercado != null ? mercado.getId() : null) +
+                ", alineacion=" + (alineacion != null ? alineacion.getId() : null) +
+                '}';
+    }
 }

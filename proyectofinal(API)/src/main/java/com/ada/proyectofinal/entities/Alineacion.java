@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -25,7 +26,11 @@ public class Alineacion {
     @OneToMany(mappedBy = "alineacion", cascade = CascadeType.ALL)
     @JsonManagedReference("alineacion-pokemons")
     private List<Pokemon> pokemons;
-
-
-
+    @Override
+    public String toString() {
+        return "Alineacion{" +
+                "id=" + id +
+                ", zona='" + zona + '\'' +
+                '}';
+    }
 }

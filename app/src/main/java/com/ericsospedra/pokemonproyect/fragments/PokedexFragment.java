@@ -16,7 +16,6 @@ import com.ericsospedra.pokemonproyect.adapters.PokemonAdapter;
 import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.interfaces.IApiService;
 import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
-import com.ericsospedra.pokemonproyect.models.Pokemon;
 import com.ericsospedra.pokemonproyect.models.RestClient;
 
 import java.util.List;
@@ -34,6 +33,7 @@ public class PokedexFragment extends Fragment implements View.OnClickListener {
     private ImageView ivPokedex;
     private ImageView ivBattle;
     private ImageView ivMarket;
+    private ImageView ivHome;
 
     public PokedexFragment() {
         super(R.layout.pokedex_fragment);
@@ -43,11 +43,13 @@ public class PokedexFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         api = RestClient.getInstance();
-        menuLayout = view.findViewById(R.id.iMenuPokedex);
+        menuLayout = view.findViewById(R.id.iMenuCombate);
+        ivHome = menuLayout.findViewById(R.id.ivHome);
         ivTrainer = menuLayout.findViewById(R.id.ivTrainer);
         ivPokedex = menuLayout.findViewById(R.id.ivPokedex);
         ivBattle = menuLayout.findViewById(R.id.ivBattle);
         ivMarket = menuLayout.findViewById(R.id.ivMarket);
+        ivHome.setOnClickListener(this);
         ivTrainer.setOnClickListener(this);
         ivPokedex.setOnClickListener(this);
         ivBattle.setOnClickListener(this);
@@ -77,7 +79,7 @@ public class PokedexFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == ivTrainer.getId() || v.getId() == ivBattle.getId() || v.getId() == ivMarket.getId() || v.getId() == ivPokedex.getId()) {
+        if (v.getId() == ivHome.getId() || v.getId() == ivTrainer.getId() || v.getId() == ivBattle.getId() || v.getId() == ivMarket.getId() || v.getId() == ivPokedex.getId()) {
             listener.onClick(v.getId());
         }
     }

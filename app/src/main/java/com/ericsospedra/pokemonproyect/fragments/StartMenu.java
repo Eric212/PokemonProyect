@@ -122,18 +122,14 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                     token = response.body();
                     if (!token.getToken().equals("")) {
                         tvAlert.setVisibility(View.GONE);
-                        if (!preference.getString("token", "").equals(token.getToken())) {
-                            Log.d("Info ", "Añado el token porque no lo tenia");
                             preference.edit().putString("token", token.getToken()).apply();
+                            preference.edit().putString("username",usuarioDTO.getUsername()).apply();
+                            preference.edit().putString("password",etPassword.getText().toString()).apply();
+                            preference.edit().putString("ip",RestClient.getIp()).apply();
+                            preference.edit().putString("puerto",RestClient.getPuerto()).apply();
                         }
-                        Log.d("Info ", "Apunto de saltar al main");
                         listener.onClick(v.getId());
-                    } else {
-                        tvAlert.setVisibility(View.VISIBLE);
-                        tvAlert.setText("Error al iniciar sesion");
                     }
-                }
-
                 @Override
                 public void onFailure(Call<TokenDTO> call, Throwable t) {
                     Log.e(StartMenu.class.getSimpleName(), t.getMessage());
@@ -151,7 +147,6 @@ public class StartMenu extends Fragment implements View.OnClickListener {
                 @Override
                 public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
                     token = response.body();
-                    Log.d("Info ", token.getToken());
                     if (!token.getToken().equals("")) {
                         if (cbRemember.isChecked()) {
                             if (preference.getString("username", "").isEmpty()) {

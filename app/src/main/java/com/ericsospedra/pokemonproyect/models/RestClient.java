@@ -10,10 +10,11 @@ public class RestClient {
     private static String puerto;
     private static IApiService instance;
     private RestClient(){
-
     }
     public synchronized static IApiService getInstance(){
         if(instance == null){
+            ip = "192.168.3.47";
+            puerto = "8080";
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://"+ip+":"+puerto+"/")
                     .addConverterFactory(GsonConverterFactory.create())

@@ -7,9 +7,11 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.ericsospedra.pokemonproyect.databinding.FightFragmentBinding;
 import com.ericsospedra.pokemonproyect.dto.UsuarioDTO;
 import com.ericsospedra.pokemonproyect.fragments.AlignmentFragment;
 import com.ericsospedra.pokemonproyect.fragments.BattleFragment;
+import com.ericsospedra.pokemonproyect.fragments.FightFragment;
 import com.ericsospedra.pokemonproyect.fragments.MarketFragment;
 import com.ericsospedra.pokemonproyect.fragments.PlayerCreatorFragment;
 import com.ericsospedra.pokemonproyect.fragments.PokedexFragment;
@@ -30,7 +32,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements
         IOnClickListener,
-        PokemonDetailFragment.IOnAttach {
+        PokemonDetailFragment.IOnAttach,
+        FightFragment.IOnAttach {
 
     private IApiService api;
     public static String token;
@@ -107,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements
             logicaMenu(position);
         }else if(manager.findFragmentById(R.id.fcvMain) instanceof PokemonDetailFragment) {
             logicaMenu(position);
+        }else if(manager.findFragmentById(R.id.fcvMain) instanceof BattleFragment){
+            if(!logicaMenu(position)){
+                id.push(position);
+                manager.beginTransaction().setReorderingAllowed(true).addToBackStack(null).replace(R.id.fcvMain, FightFragment.class,null).commit();
+            }
         }
     }
 
@@ -133,5 +141,10 @@ public class MainActivity extends AppCompatActivity implements
         }else {
             return false;
         }
+    }
+
+    @Override
+    public int getContrincante() {
+        return id.pop();
     }
 }

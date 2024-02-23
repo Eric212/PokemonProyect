@@ -28,12 +28,20 @@ public class Usuario {
 
     private String token;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference("usuario-entrenador")
     private Entrenador entrenador;
 
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference("usuario-combate")
     private List<Combate> combates;
-
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

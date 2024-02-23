@@ -1,9 +1,6 @@
 package com.ada.proyectofinal.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@ToString
 public class Entrenador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +39,7 @@ public class Entrenador {
     @JsonManagedReference("entrenador-combate")
     private Combate  combate;
 
-    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "entrenador", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Pokemon> pokemons = new ArrayList<>();
 
@@ -54,5 +50,18 @@ public class Entrenador {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     @JsonBackReference("usuario-entrenador")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     private Usuario usuario;
+    @Override
+    public String toString() {
+        return "Entrenador{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", Icono='" + icono + '\'' +
+                ", dinero=" + dinero +
+                ", resultados=" + resultados +
+                '}';
+    }
 }

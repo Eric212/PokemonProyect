@@ -14,4 +14,5 @@
     <string name="entrenador">Entrenador</string>
     <string name="combates">Combates</string>
     <string name="mercado">Mercado</string>
+    <string name="dado">dado 20 caras</string>
 </resources>

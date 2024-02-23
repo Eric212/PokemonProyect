@@ -9,18 +9,6 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String username, String password, String token) {
-        this.username = username;
-        this.password = password;
-        this.token = token;
-    }
-
-    public UsuarioDTO(int id, String username, String password, String token) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.token = token;
-    }
 
     // Getters y setters
     public int getId() {

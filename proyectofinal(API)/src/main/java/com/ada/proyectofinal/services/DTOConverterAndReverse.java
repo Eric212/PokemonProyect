@@ -3,8 +3,6 @@ package com.ada.proyectofinal.services;
 import com.ada.proyectofinal.dto.*;
 import com.ada.proyectofinal.entities.*;
 import com.ada.proyectofinal.repositories.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +21,6 @@ public class DTOConverterAndReverse {
     RepositoryAlineacion repositoryAlineacion;
     @Autowired
     RepositoryMercado repositoryMercado;
-    @Autowired
-    RepositoryZona repositoryZona;
-    @Autowired
-    RepositoryCombate repositoryCombate;
     @Autowired
     RepositoryUsuario repositoryUsuario;
 
@@ -51,12 +45,12 @@ public class DTOConverterAndReverse {
             pokemonDTO.setMercado(pokemon.getMercado().getId());
         }
         if (pokemon.getAlineacion() != null) {
-            pokemonDTO.setAlineacion(pokemon.getAlineacion().getId());
+            pokemonDTO.setAlineacionId(pokemon.getAlineacion().getId());
         }
         return pokemonDTO;
     }
 
-    public static List<PokemonDTO> listaPokemonDTO(List<Pokemon> pokemons) {
+    public  List<PokemonDTO> listaPokemonDTO(List<Pokemon> pokemons) {
         return pokemons.stream()
                 .map(pokemon -> {
                     PokemonDTO pokemonDTO = new PokemonDTO();
@@ -78,7 +72,7 @@ public class DTOConverterAndReverse {
                         pokemonDTO.setMercado(pokemon.getMercado().getId());
                     }
                     if(pokemon.getAlineacion()!=null) {
-                        pokemonDTO.setAlineacion(pokemon.getAlineacion().getId());
+                        pokemonDTO.setAlineacionId(pokemon.getAlineacion().getId());
                     }
                     return pokemonDTO;
                 })
@@ -99,13 +93,13 @@ public class DTOConverterAndReverse {
         pokemon.setValor(pokemonDTO.getValor());
         pokemon.setHiresURL(pokemonDTO.getHiresURL());
         if (pokemon.getEntrenador() != null) {
-            pokemon.setEntrenador(repositoryEntrenador.findById(pokemonDTO.getEntrenador()));
+            pokemon.setEntrenador(new Entrenador(pokemonDTO.getEntrenador(),null,null,false,null,0f,null,null,null,null));
         }
         if (pokemon.getMercado() != null) {
-            pokemon.setMercado(repositoryMercado.findById(pokemonDTO.getMercado()));
+            pokemon.setMercado(new Mercado(pokemonDTO.getMercado(),null,null));
         }
         if (pokemon.getAlineacion() != null) {
-            pokemon.setAlineacion(repositoryAlineacion.findById(pokemonDTO.getAlineacion()));
+            pokemon.setAlineacion(new Alineacion(pokemonDTO.getAlineacionId(),null,null));
         }
         return pokemon;
     }
@@ -125,14 +119,17 @@ public class DTOConverterAndReverse {
                     pokemon.setGender(pokemonDTO.getGender());
                     pokemon.setValor(pokemonDTO.getValor());
                     pokemon.setHiresURL(pokemonDTO.getHiresURL());
-                    if (pokemon.getEntrenador() != null) {
-                        pokemon.setEntrenador(repositoryEntrenador.findById(pokemonDTO.getId()));
+                    if (pokemonDTO.getEntrenador() != 0) {
+                        Entrenador entrenador = repositoryEntrenador.findById(pokemonDTO.getEntrenador());
+                        pokemon.setEntrenador(entrenador);
                     }
-                    if (pokemon.getAlineacion() != null) {
-                        pokemon.setAlineacion(repositoryAlineacion.findById(pokemonDTO.getAlineacion()));
+                    if (pokemonDTO.getMercado() != 0) {
+                        Mercado mercado = repositoryMercado.findById(pokemonDTO.getMercado());
+                        pokemon.setMercado(new Mercado(mercado.getId(),mercado.getFecha(),mercado.getPokemons()));
                     }
-                    if (pokemon.getMercado() != null) {
-                        pokemon.setMercado(repositoryMercado.findById(pokemonDTO.getMercado()));
+                    if (pokemonDTO.getAlineacionId() != 0) {
+                        Alineacion alineacion = repositoryAlineacion.findById(pokemonDTO.getAlineacionId());
+                        pokemon.setAlineacion(new Alineacion(alineacion.getId(),alineacion.getZona(),alineacion.getPokemons()));
                     }
                     return pokemon;
                 })
@@ -175,7 +172,9 @@ public class DTOConverterAndReverse {
             entrenadorDTO.setApellido(entrenador.getApellido());
             entrenadorDTO.setIcono(entrenador.getIcono());
             entrenadorDTO.setDinero(entrenador.getDinero());
-            entrenadorDTO.setUsuario_id(entrenador.getUsuario().getId());
+            if(entrenadorDTO.getUsuario_id()!=0){
+                entrenadorDTO.setUsuario_id(entrenador.getUsuario().getId());
+            }
             entrenadorDTO.setPokemons(listaPokemonDTO(entrenador.getPokemons()));
             entrenadorDTO.setResultados(listaResultadosDTO(entrenador.getResultados()));
             return entrenadorDTO;
@@ -374,4 +373,84 @@ public class DTOConverterAndReverse {
         }).collect(Collectors.toList());
     }
 
+//Ronda
+    public static RondaDTO fromRonda(Ronda ronda) {
+        RondaDTO rondaDTO = new RondaDTO();
+        rondaDTO.setId(ronda.getId());
+        rondaDTO.setDadoJugador(ronda.getDadoJugador());
+        rondaDTO.setDadoUsuario(ronda.getDadoUsuario());
+        rondaDTO.setUsuWinner(ronda.getUsuWinner());
+        rondaDTO.setPlayerWinner(ronda.getPlayerWinner());
+        rondaDTO.setCombate(ronda.getCombate().getId());
+        return rondaDTO;
+    }
+
+    public static List<RondaDTO> listaRondaDTO(List<Ronda> rondas) {
+        List<RondaDTO> rondaDTOList = new ArrayList<>();
+        for (Ronda ronda : rondas) {
+            rondaDTOList.add(fromRonda(ronda));
+        }
+        return rondaDTOList;
+    }
+
+    public static Ronda fromRondaDTO(RondaDTO rondaDTO) {
+        Ronda ronda = new Ronda();
+        ronda.setId(rondaDTO.getId());
+        ronda.setDadoJugador(rondaDTO.getDadoJugador());
+        ronda.setDadoUsuario(rondaDTO.getDadoUsuario());
+        ronda.setUsuWinner(rondaDTO.getUsuWinner());
+        ronda.setPlayerWinner(rondaDTO.getPlayerWinner());
+        // Aquí necesitarías lógica para recuperar el Combate por su ID
+        // y asignarlo a la Ronda
+        // Por simplicidad, lo dejaremos así por ahora
+        return ronda;
+    }
+
+    public static List<Ronda> listaRonda(List<RondaDTO> rondaDTOList) {
+        List<Ronda> rondas = new ArrayList<>();
+        for (RondaDTO rondaDTO : rondaDTOList) {
+            rondas.add(fromRondaDTO(rondaDTO));
+        }
+        return rondas;
+    }
+
+    //Combate
+    public static CombateDTO fromCombate(Combate combate) {
+        CombateDTO combateDTO = new CombateDTO();
+        combateDTO.setId(combate.getId());
+        combateDTO.setFecha(combate.getFecha());
+        combateDTO.setUsuarioWinner(combate.getUsuarioWinner());
+        combateDTO.setJugadorWinner(combate.getJugadorWinner());
+        combateDTO.setUsuarioId(combate.getUsuario().getId());
+        combateDTO.setEntrenadorId(combate.getEntrenador().getId());
+        List<Integer> rondasIds = new ArrayList<>();
+        combate.getRondas().forEach(ronda -> rondasIds.add(ronda.getId()));
+        combateDTO.setRondasIds(rondasIds);
+        return combateDTO;
+    }
+
+    public static List<CombateDTO> listaCombateDTO(List<Combate> combateList) {
+        List<CombateDTO> combateDTOList = new ArrayList<>();
+        for (Combate combate : combateList) {
+            combateDTOList.add(fromCombate(combate));
+        }
+        return combateDTOList;
+    }
+
+    public static Combate fromCombateDTO(CombateDTO combateDTO) {
+        Combate combate = new Combate();
+        combate.setId(combateDTO.getId());
+        combate.setFecha(combateDTO.getFecha());
+        combate.setUsuarioWinner(combateDTO.getUsuarioWinner());
+        combate.setJugadorWinner(combateDTO.getJugadorWinner());
+        return combate;
+    }
+
+    public static List<Combate> listaCombate(List<CombateDTO> combateDTOList) {
+        List<Combate> combateList = new ArrayList<>();
+        for (CombateDTO combateDTO : combateDTOList) {
+            combateList.add(fromCombateDTO(combateDTO));
+        }
+        return combateList;
+    }
 }

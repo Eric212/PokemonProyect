@@ -2,7 +2,6 @@ package com.ada.proyectofinal.dto;
 
 import lombok.ToString;
 
-@ToString
 public class PokemonDTO {
     private int id;
     private String name;
@@ -16,14 +15,14 @@ public class PokemonDTO {
     private float valor;
     private String hiresURL;
     private int entrenador;
-    private int mercado;
-    private int alineacion;
+    private int mercadoId;
+    private int alineacionId;
 
     // Constructor, getters y setters
     public PokemonDTO() {
     }
 
-    public PokemonDTO(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, int entrenador, int mercado, int alineacion) {
+    public PokemonDTO(int id, String name, String type, int level, int hp, int attack, int defence, int speed, String gender, float valor, String hiresURL, int entrenador, int mercadoId, int alineacionId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -36,8 +35,8 @@ public class PokemonDTO {
         this.valor = valor;
         this.hiresURL = hiresURL;
         this.entrenador = entrenador;
-        this.mercado = mercado;
-        this.alineacion = alineacion;
+        this.mercadoId = mercadoId;
+        this.alineacionId = alineacionId;
     }
 
     public int getId() {
@@ -137,18 +136,38 @@ public class PokemonDTO {
     }
 
     public int getMercado() {
-        return mercado;
+        return mercadoId;
     }
 
-    public void setMercado(int mercado) {
-        this.mercado = mercado;
+    public void setMercado(int mercadoId) {
+        this.mercadoId = mercadoId;
     }
 
-    public int getAlineacion() {
-        return alineacion;
+    public int getAlineacionId() {
+        return alineacionId;
     }
 
-    public void setAlineacion(int alineacion) {
-        this.alineacion = alineacion;
+    public void setAlineacionId(int alineacionId) {
+        this.alineacionId = alineacionId;
+    }
+
+    @Override
+    public String toString() {
+        return "PokemonDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", level=" + level +
+                ", hp=" + hp +
+                ", attack=" + attack +
+                ", defence=" + defence +
+                ", speed=" + speed +
+                ", gender='" + gender + '\'' +
+                ", valor=" + valor +
+                ", hiresURL='" + hiresURL + '\'' +
+                ", entrenador=" + entrenador +
+                ", mercadoId=" + mercadoId +
+                ", alineacionId=" + alineacionId +
+                '}';
     }
 }

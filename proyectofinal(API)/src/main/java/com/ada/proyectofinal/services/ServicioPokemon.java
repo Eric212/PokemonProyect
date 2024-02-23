@@ -1,5 +1,6 @@
 package com.ada.proyectofinal.services;
 
+import com.ada.proyectofinal.dto.PokemonDTO;
 import com.ada.proyectofinal.entities.Pokemon;
 import com.ada.proyectofinal.repositories.RepositoryEntrenador;
 import com.ada.proyectofinal.repositories.RepositoryPokemon;

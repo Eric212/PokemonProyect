@@ -1,7 +1,8 @@
 package com.ericsospedra.pokemonproyect.fragments;
 
+import static com.ericsospedra.pokemonproyect.utils.AvatarRecovery.recuperarAvatares;
+
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +23,6 @@ import com.ericsospedra.pokemonproyect.interfaces.IOnClickListener;
 import com.ericsospedra.pokemonproyect.models.Entrenador;
 import com.ericsospedra.pokemonproyect.models.RestClient;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class PlayerCreatorFragment extends Fragment {
         rbMasculino = view.findViewById(R.id.rbMasculino);
         rbFemenino = view.findViewById(R.id.rbFemenino);
         bCrear = view.findViewById(R.id.bCrearJugador);
-        recuperarAvatares();
+        avatares = recuperarAvatares(getContext());
         ivJugador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +79,7 @@ public class PlayerCreatorFragment extends Fragment {
                 if(etNombreJugador.getText()!=null&&etApellidoJugador.getText()!=null&&(rbMasculino.isChecked()||rbFemenino.isChecked())){
                     api = RestClient.getInstance();
                     if(imageId==null) {
-                        imageId = R.drawable.avatar243;
+                        imageId = R.drawable.avatar150;
                     }
                     Entrenador entrenador = new Entrenador(etNombreJugador.getText().toString(),etApellidoJugador.getText().toString(),parametroGenero,String.valueOf(imageId),150000f, null);
                     EntrenadorDTO entrenadorDTO = EntrenadorDTO.fromEntrenador(entrenador);
@@ -110,23 +109,5 @@ public class PlayerCreatorFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         listener = (IOnClickListener) context;
-    }
-
-    private void recuperarAvatares() {
-        avatares = new ArrayList<>();
-        Resources res = getResources();
-        Class<?> drawableClass = R.drawable.class;
-        Field[] fields = drawableClass.getFields();
-        for (Field field : fields) {
-            try {
-                String name = field.getName();
-                if (name.startsWith("avatar")) {
-                    int resourceId = field.getInt(null);
-                    avatares.add(resourceId);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

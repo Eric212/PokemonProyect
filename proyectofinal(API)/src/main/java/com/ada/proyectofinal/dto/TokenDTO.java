@@ -8,12 +8,6 @@ public class TokenDTO {
     public TokenDTO() {
     }
 
-    public static TokenDTO fromToken(Token token){
-        TokenDTO tokenDTO = new TokenDTO();
-        tokenDTO.setToken(token.getToken());
-        return tokenDTO;
-    }
-
     public TokenDTO(String token) {
         this.token = token;
     }

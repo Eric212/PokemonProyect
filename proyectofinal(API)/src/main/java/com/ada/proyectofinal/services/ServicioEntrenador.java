@@ -41,4 +41,7 @@ public class ServicioEntrenador {
     public Entrenador recuperarEntrenadorPorUsuario(int id) {
         return repositoryEntrenador.recuperarEntrenadorPorUsuario(id);
     }
+    public  List<Entrenador> recuperarBots(){
+        return repositoryEntrenador.recuperarBots();
+    }
 }

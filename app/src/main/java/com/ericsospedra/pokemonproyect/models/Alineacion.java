@@ -33,4 +33,12 @@ public class Alineacion {
     public void setZona(String zona) {
         this.zona = zona;
     }
+
+    @Override
+    public String toString() {
+        return "Alineacion{" +
+                "id=" + id +
+                ", zona='" + zona + '\'' +
+                '}';
+    }
 }

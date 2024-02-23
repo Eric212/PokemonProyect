@@ -3,6 +3,7 @@ package com.ericsospedra.pokemonproyect.fragments;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -124,7 +125,6 @@ public class PokemonDetailFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFailure(Call<PokemonDTO> call, Throwable t) {
-
             }
         });
     }

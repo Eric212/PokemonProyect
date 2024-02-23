@@ -7,7 +7,7 @@
     android:background="@drawable/pokedex">
 
     <include
-        android:id="@+id/iMenuPokedex"
+        android:id="@+id/iMenuCombate"
         layout="@layout/menu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,5 +22,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iMenuPokedex" />
+        app:layout_constraintTop_toBottomOf="@+id/iMenuCombate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

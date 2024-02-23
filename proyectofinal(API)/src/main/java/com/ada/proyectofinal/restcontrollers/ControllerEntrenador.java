@@ -48,4 +48,10 @@ public class ControllerEntrenador {
     public EntrenadorDTO recuperarEntrenadorPorUsuario(@PathVariable("id") int id){
         return dtoConverterAndReverse.fromEntrenador(servicioEntrenador.recuperarEntrenadorPorUsuario(id));
     }
+
+    @GetMapping("/bots")
+    public List<EntrenadorDTO> recuperarBots(){
+        return dtoConverterAndReverse.listaEntrenadorDTO(servicioEntrenador.recuperarBots());
+    }
+
 }

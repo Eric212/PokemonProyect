@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
 @Table(name = "rondas")
+@ToString
 public class Ronda {
 
     @Id
@@ -24,13 +26,10 @@ public class Ronda {
     private int dadoUsuario;
 
     @Column
-    private int dadoCarta;
-
-    @Column
     private int usuWinner;
 
     @Column
-    private int jugWinner;
+    private int playerWinner;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "combate_id")

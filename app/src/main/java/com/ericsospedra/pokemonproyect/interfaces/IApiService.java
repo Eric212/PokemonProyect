@@ -1,6 +1,7 @@
 package com.ericsospedra.pokemonproyect.interfaces;
 
 import com.ericsospedra.pokemonproyect.dto.AlineacionDTO;
+import com.ericsospedra.pokemonproyect.dto.CombateDTO;
 import com.ericsospedra.pokemonproyect.dto.EntrenadorDTO;
 import com.ericsospedra.pokemonproyect.dto.PokemonDTO;
 import com.ericsospedra.pokemonproyect.dto.TokenDTO;
@@ -49,7 +50,7 @@ public interface IApiService {
     Call<EntrenadorDTO> getEntrenador(@Path("id")int id);
 
     @GET("pokemons/alineados/{id}")
-    Call<List<PokemonDTO>> getPokemonsAlineados(@Path("id") int i);
+    Call<List<PokemonDTO>> getPokemonsAlineados(@Path("id") int id);
     @GET("entrenador/usuario/{id}")
     Call<Boolean> entrenadorTieneUsuario(@Path("id")int id);
 
@@ -63,5 +64,14 @@ public interface IApiService {
     Call<EntrenadorDTO> recuperarEntrenadorPorUsuario(@Path("id") int id);
 
     @POST("pokemons/alinear")
-    Call<Boolean> updateAlineacion(@Body List<PokemonDTO> pokemonsAlineadosDTO);
+    Call<Boolean> updateAlineacion(@Body List<PokemonDTO> pokemons);
+
+    @GET("entrenador/bots")
+    Call<List<EntrenadorDTO>> recuperarBots();
+
+    @POST("combate/guardar")
+    Call<Boolean> mandarCombate(@Body CombateDTO combateDTO);
+
+    /*@GET("combate/comenzar/{idJugador}/{idContrincante}")
+    Call<List<PokemonDTO>> getPokemonsParaPelear(@Path("idJugador") int idJugador,@Path("idContrincante") int idContrincante);*/
 }
