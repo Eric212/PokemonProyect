@@ -425,7 +425,6 @@ public class DTOConverterAndReverse {
         combateDTO.setEntrenadorId(combate.getEntrenador().getId());
         List<Integer> rondasIds = new ArrayList<>();
         combate.getRondas().forEach(ronda -> rondasIds.add(ronda.getId()));
-        combateDTO.setRondasIds(rondasIds);
         return combateDTO;
     }
 

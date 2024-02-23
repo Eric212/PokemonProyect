@@ -2,7 +2,7 @@ package com.ada.proyectofinal.dto;
 
 import java.util.List;
 
-public class CombateDTO {
+public class    CombateDTO {
 
     private int id;
     private String fecha;

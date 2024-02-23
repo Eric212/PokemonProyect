@@ -29,7 +29,7 @@ public class TrainerPokemonAdapter extends RecyclerView.Adapter<TrainerPokemonAd
     @NonNull
     @Override
     public TrainerPokemonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TrainerPokemonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_welcome_alineacion,parent,false));
+        return new TrainerPokemonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_trainer,parent,false));
     }
 
     @Override

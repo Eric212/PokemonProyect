@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ericsospedra.pokemonproyect.models.RestClient;
+
 
 public class LoginPreference extends AppCompatActivity implements View.OnFocusChangeListener {
     private EditText etUsername;
@@ -54,6 +56,7 @@ public class LoginPreference extends AppCompatActivity implements View.OnFocusCh
             editor = preferences.edit();
             editor.putString("ip", etIP.getText().toString());
             editor.apply();
+            RestClient.setIp(etIP.getText().toString());
         }else{
             editor = preferences.edit();
             editor.putString("puerto", etPuerto.getText().toString());

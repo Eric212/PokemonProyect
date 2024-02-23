@@ -210,7 +210,7 @@ public class FightFragment extends Fragment {
                                 }
                             }
 
-                            CombateDTO combateDTO = new CombateDTO(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US).format(new Date()), 0, 0, 1, idContrincante);
+                            CombateDTO combateDTO = new CombateDTO();
                             if (rondasGanasJugador > rondasGanasContrincante) {
                                 combateDTO.setUsuarioWinner(1);
                             } else if (rondasGanasContrincante > rondasGanasJugador) {
@@ -219,6 +219,9 @@ public class FightFragment extends Fragment {
                                 combateDTO.setUsuarioWinner(1);
                                 combateDTO.setJugadorWinner(idContrincante);
                             }
+                            combateDTO.setFecha(new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US).format(new Date()));
+                            combateDTO.setEntrenadorId(idContrincante);
+                            combateDTO.setUsuarioId(1);
                             api.mandarCombate(combateDTO).enqueue(new Callback<Boolean>() {
                                 @Override
                                 public void onResponse (Call<Boolean> call, Response<Boolean> response) {
